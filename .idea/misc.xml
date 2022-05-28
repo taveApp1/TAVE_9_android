@@ -4,6 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/tydragon65/AndroidStudioProjects/Senapool_Project/app/src/main/res/layout/activity_main.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/tydragon65/AndroidStudioProjects/Senapool_Project/app/src/main/res/layout/fragment_diary_feed.xml" value="0.29713552800342025" />
+        <entry key="..\:/Users/tydragon65/AndroidStudioProjects/Senapool_Project/app/src/main/res/layout/fragment_my_plant.xml" value="0.29713552800342025" />
+        <entry key="..\:/Users/tydragon65/AndroidStudioProjects/Senapool_Project/app/src/main/res/layout/fragment_setting.xml" value="0.29713552800342025" />
+        <entry key="..\:/Users/tydragon65/AndroidStudioProjects/Senapool_Project/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.2" />
       </map>
     </option>
   </component>
