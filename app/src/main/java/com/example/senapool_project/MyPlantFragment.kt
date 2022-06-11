@@ -1,5 +1,6 @@
 package com.example.senapool_project
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -46,6 +47,10 @@ class MyPlantFragment : Fragment() {
                     .commitAllowingStateLoss()
             }
         })
+
+        binding.myPlantPlusIb.setOnClickListener {
+            startActivity(Intent(activity, MyPlantEnrollActivity::class.java))
+        }
 
         return binding.root
     }

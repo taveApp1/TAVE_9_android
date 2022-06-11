@@ -1,6 +1,7 @@
 package com.example.senapool_project
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -36,15 +37,14 @@ class MyPlantDiaryListFragment : Fragment() {
         binding.myPlantDiaryListRv.adapter=diaryRVAdapter
         binding.myPlantDiaryListRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-//        diaryRVAdapter.setMyItemClickListener(object: DiaryRVAdapter.MyItemClickListener{
-//            override fun onItemClick() {
-//                (context as MainActivity).supportFragmentManager.beginTransaction()
-//                    .replace(R.id.main_frm)
-//            }
-//        })
+        diaryRVAdapter.setMyItemClickListener(object: DiaryRVAdapter.MyItemClickListener{
+            override fun onItemClick() {
+                startActivity(Intent(activity, MyPlantDiaryDetailActivity::class.java))
+            }
+        })
         return binding.root
     }
-    
+
 
 
 
