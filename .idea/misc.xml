@@ -3,20 +3,26 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/tydragon65/AndroidStudioProjects/Senapool_Project/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.293" />
+        <entry key="..\:/Users/tydragon65/AndroidStudioProjects/Senapool_Project/app/src/main/res/drawable/dark_green_button.xml" value="0.293" />
         <entry key="..\:/Users/tydragon65/AndroidStudioProjects/Senapool_Project/app/src/main/res/drawable/diary_list_box.xml" value="0.296" />
         <entry key="..\:/Users/tydragon65/AndroidStudioProjects/Senapool_Project/app/src/main/res/drawable/navigation_selected_color.xml" value="0.2215" />
         <entry key="..\:/Users/tydragon65/AndroidStudioProjects/Senapool_Project/app/src/main/res/drawable/watering_button.xml" value="0.2985" />
         <entry key="..\:/Users/tydragon65/AndroidStudioProjects/Senapool_Project/app/src/main/res/font/font.xml" value="0.23300555793073963" />
         <entry key="..\:/Users/tydragon65/AndroidStudioProjects/Senapool_Project/app/src/main/res/font/font_regular.xml" value="0.11714407866609662" />
+        <entry key="..\:/Users/tydragon65/AndroidStudioProjects/Senapool_Project/app/src/main/res/layout/activity_diary_feed_detail.xml" value="0.12781954887218044" />
         <entry key="..\:/Users/tydragon65/AndroidStudioProjects/Senapool_Project/app/src/main/res/layout/activity_main.xml" value="0.152" />
-        <entry key="..\:/Users/tydragon65/AndroidStudioProjects/Senapool_Project/app/src/main/res/layout/activity_my_plant_diary_detail.xml" value="0.152" />
+        <entry key="..\:/Users/tydragon65/AndroidStudioProjects/Senapool_Project/app/src/main/res/layout/activity_my_plant_diary_detail.xml" value="0.2" />
+        <entry key="..\:/Users/tydragon65/AndroidStudioProjects/Senapool_Project/app/src/main/res/layout/activity_my_plant_diary_write.xml" value="0.2" />
         <entry key="..\:/Users/tydragon65/AndroidStudioProjects/Senapool_Project/app/src/main/res/layout/activity_my_plant_enroll.xml" value="0.264" />
-        <entry key="..\:/Users/tydragon65/AndroidStudioProjects/Senapool_Project/app/src/main/res/layout/fragment_diary_feed.xml" value="0.176" />
+        <entry key="..\:/Users/tydragon65/AndroidStudioProjects/Senapool_Project/app/src/main/res/layout/fragment_diary_feed.xml" value="0.264" />
         <entry key="..\:/Users/tydragon65/AndroidStudioProjects/Senapool_Project/app/src/main/res/layout/fragment_my_plant.xml" value="0.264" />
         <entry key="..\:/Users/tydragon65/AndroidStudioProjects/Senapool_Project/app/src/main/res/layout/fragment_my_plant_diary_list.xml" value="0.264" />
         <entry key="..\:/Users/tydragon65/AndroidStudioProjects/Senapool_Project/app/src/main/res/layout/fragment_setting.xml" value="0.29713552800342025" />
+        <entry key="..\:/Users/tydragon65/AndroidStudioProjects/Senapool_Project/app/src/main/res/layout/item_diary_feed.xml" value="0.4" />
         <entry key="..\:/Users/tydragon65/AndroidStudioProjects/Senapool_Project/app/src/main/res/layout/item_my_plant.xml" value="0.6" />
-        <entry key="..\:/Users/tydragon65/AndroidStudioProjects/Senapool_Project/app/src/main/res/layout/item_my_plant_diary.xml" value="0.536" />
+        <entry key="..\:/Users/tydragon65/AndroidStudioProjects/Senapool_Project/app/src/main/res/layout/item_my_plant_diary.xml" value="0.176" />
+        <entry key="..\:/Users/tydragon65/AndroidStudioProjects/Senapool_Project/app/src/main/res/layout/item_my_plant_feed.xml" value="0.2" />
         <entry key="..\:/Users/tydragon65/AndroidStudioProjects/Senapool_Project/app/src/main/res/layout/my_plant_list_item.xml" value="0.3004273504273504" />
         <entry key="..\:/Users/tydragon65/AndroidStudioProjects/Senapool_Project/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.4" />
       </map>

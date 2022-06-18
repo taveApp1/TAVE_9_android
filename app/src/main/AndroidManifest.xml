@@ -20,6 +20,10 @@
         </activity>
         <activity android:name=".MyPlantDiaryDetailActivity"></activity>
         <activity android:name=".MyPlantEnrollActivity"></activity>
+        <activity
+            android:name=".MyPlantDiaryWriteActivity"
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name=".DiaryFeedDetailActivity"></activity>
     </application>
 
 </manifest>
