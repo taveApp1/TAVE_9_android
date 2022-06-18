@@ -25,12 +25,12 @@ class MyPlantDiaryListFragment : Fragment() {
         binding = FragmentMyPlantDiaryListBinding.inflate(inflater,container,false)
 
         diaryDatas.apply {
-            add(Diary("2022.05.10","일기 제목 1","내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.",R.drawable.diary_image_example))
-            add(Diary("2022.05.11","일기 제목 2","내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.",R.drawable.diary_image_example))
-            add(Diary("2022.05.12","일기 제목 3","내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.",R.drawable.diary_image_example))
-            add(Diary("2022.05.13","일기 제목 4","내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.",R.drawable.diary_image_example))
-            add(Diary("2022.05.14","일기 제목 5","내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.",R.drawable.diary_image_example))
-            add(Diary("2022.05.15","일기 제목 6","내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.",R.drawable.diary_image_example))
+            add(Diary("회원1","2022.05.10","일기 제목 1","내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.",R.drawable.diary_image_example))
+            add(Diary("회원1","2022.05.11","일기 제목 2","내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.",R.drawable.diary_image_example))
+            add(Diary("회원1","2022.05.12","일기 제목 3","내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.",R.drawable.diary_image_example))
+            add(Diary("회원1","2022.05.13","일기 제목 4","내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.",R.drawable.diary_image_example))
+            add(Diary("회원1","2022.05.14","일기 제목 5","내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.",R.drawable.diary_image_example))
+            add(Diary("회원1","2022.05.15","일기 제목 6","내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.",R.drawable.diary_image_example))
         }
 
         val diaryRVAdapter = DiaryRVAdapter(diaryDatas)
@@ -42,6 +42,10 @@ class MyPlantDiaryListFragment : Fragment() {
                 startActivity(Intent(activity, MyPlantDiaryDetailActivity::class.java))
             }
         })
+
+        binding.myPlantDiaryListNewDiaryWriteTv.setOnClickListener {
+            startActivity(Intent(activity, MyPlantDiaryWriteActivity::class.java))
+        }
         return binding.root
     }
 
