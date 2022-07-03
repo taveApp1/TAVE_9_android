@@ -10,16 +10,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Senapool_Project">
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginMainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".SettingEditMemberInfo"></activity>
+        <activity android:name=".LoginPWActivity"></activity>
+        <activity android:name=".LoginSignUpActivity"></activity>
         <activity android:name=".MyPlantDiaryDetailActivity"></activity>
         <activity android:name=".MyPlantEnrollActivity"></activity>
+        <activity android:name=".SettingEditMemberInfo"></activity>
         <activity
             android:name=".MyPlantDiaryWriteActivity"
             android:windowSoftInputMode="adjustPan"></activity>
