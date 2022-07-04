@@ -1,0 +1,16 @@
+package com.example.senapool_project
+
+import retrofit2.Call
+import retrofit2.http.Body
+import retrofit2.http.POST
+
+interface AuthRetrofitInterface {
+    @POST("/user/signup")
+    fun signUp(@Body user:User): Call<AuthResponse>
+
+    @POST("/mailConfirm")
+    fun verifyEmailSend(@Body email:String): Call<VerifySendResponse>
+
+    @POST("/verifyCode")
+    fun verifyConfirm(@Body code:String): Call<VerifyConfirmResponse>
+}

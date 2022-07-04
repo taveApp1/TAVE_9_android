@@ -1,6 +1,5 @@
 package com.example.senapool_project
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +9,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.senapool_project.databinding.FragmentMyPlantDiaryListBinding
+
 
 class MyPlantDiaryListFragment : Fragment() {
 
@@ -46,9 +46,9 @@ class MyPlantDiaryListFragment : Fragment() {
         binding.myPlantDiaryListNewDiaryWriteTv.setOnClickListener {
             startActivity(Intent(activity, MyPlantDiaryWriteActivity::class.java))
         }
+
         return binding.root
     }
-
 
 
 
