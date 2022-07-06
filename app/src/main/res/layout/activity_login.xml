@@ -21,7 +21,7 @@
         />
 
     <EditText
-        android:id="@+id/login_email_enroll_tv"
+        android:id="@+id/login_id_enroll_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -30,7 +30,7 @@
         android:layout_marginTop="170dp"
         android:textColor="@color/black"
         android:textSize="15sp"
-        android:hint="email"
+        android:hint="id"
         android:fontFamily="@font/font_regular"
         android:textColorHint="@color/gray"
         android:backgroundTint="@color/black"
@@ -54,7 +54,7 @@
         android:fontFamily="@font/font_regular"
         android:textColorHint="@color/gray"
         android:backgroundTint="@color/black"
-
+        android:inputType="textPassword"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

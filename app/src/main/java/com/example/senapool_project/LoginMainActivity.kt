@@ -3,8 +3,12 @@ package com.example.senapool_project
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
+import android.util.Log
+import android.widget.Toast
 import com.example.senapool_project.databinding.ActivityLoginBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LoginMainActivity :AppCompatActivity(){
     lateinit var binding: ActivityLoginBinding
@@ -17,7 +21,7 @@ class LoginMainActivity :AppCompatActivity(){
         /*로그인 버튼 누르면 그 때 MainActivity.kt로 이동*/
         binding.loginButton.setOnClickListener{
             val intent=Intent(this,MainActivity::class.java)
-            startActivity(intent)
+            login()
         }
 
 
@@ -36,6 +40,52 @@ class LoginMainActivity :AppCompatActivity(){
         /*구글 버튼 누르면 api 회원가입&로그인 가능하도록*/
         /*네이버 버튼 누르면 api 회원가입&로그인 가능하도록*/
         /*카카오 버튼 누르면 api 회원가입&로그인 가능하도록*/
+    }
+
+    private fun getLogin(): Login{
+        val userId: String = binding.loginIdEnrollTv.text.toString()
+        val password: String = binding.loginPasswordEnrollTv.text.toString()
+
+        return Login(userId,password)
+    }
+
+    private fun login(){
+        if (binding.loginIdEnrollTv.text.toString().isEmpty()) {
+            Toast.makeText(this, "아이디를 입력해주세요.", Toast.LENGTH_SHORT).show()
+            return //함수 끝나도록.
+        }
+
+        if (binding.loginPasswordEnrollTv.text.toString().isEmpty()) {
+            Toast.makeText(this, "비밀번호를 입력해주세요.", Toast.LENGTH_SHORT).show()
+            return //함수 끝나도록.
+        }
+
+        val authService = getRetrofit().create(AuthRetrofitInterface::class.java)
+        authService.login(getLogin()).enqueue(object : Callback<LoginResponse> {
+
+            //응답이 왔을 때 처리하는 부분
+            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                //response의 body안에 서버 개발자가 만든게 들어있음
+                val resp: LoginResponse = response.body()!!
+                Log.d("LOGIN/SUCCESS", resp.toString())
+                when(response.code()){
+                    200->{
+                        startActivity(intent)
+                    }
+                    else->{
+                        Log.d("LOGIN/FAIL","서버에러"+response.code())
+                        //아이디 중복확인 text 해줘야함.
+                    }
+                }
+            }
+
+            //네트워크 연결자체가 실패했을 때 실행하는 부분
+            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                Log.d("LOGIN/FAILURE", t.message.toString())
+            }
+        })
+        //비동기작업이니까 함수가 잘 실행되었는지 확인차 찍어보기
+        Log.d("LOGIN", "HELLO")
     }
 
 }

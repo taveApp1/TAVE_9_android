@@ -14,3 +14,7 @@ data class VerifySendResponse(
 data class VerifyConfirmResponse(
     @SerializedName(value = "code") val code:Int
 )
+
+data class LoginResponse(
+    @SerializedName(value = "token") val token:String
+)

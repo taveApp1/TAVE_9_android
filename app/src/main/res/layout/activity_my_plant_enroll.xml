@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
             android:layout_marginEnd="50dp"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="50dp"
             android:textColor="@color/white"
             android:textSize="15sp"
             android:hint="식물 애칭"
@@ -98,6 +98,22 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
         <EditText
+            android:id="@+id/my_plant_enroll_last_water_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:hint="식물 물 주는 주기"
+            android:fontFamily="@font/font_regular"
+            android:textColorHint="@color/white"
+            android:backgroundTint="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/my_plant_enroll_watering_cycle_tv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+        <EditText
             android:id="@+id/my_plant_enroll_start_date_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -110,7 +126,7 @@
             android:fontFamily="@font/font_regular"
             android:textColorHint="@color/white"
             android:backgroundTint="@color/white"
-            app:layout_constraintTop_toBottomOf="@id/my_plant_enroll_watering_cycle_tv"
+            app:layout_constraintTop_toBottomOf="@id/my_plant_enroll_last_water_tv"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
         <TextView
