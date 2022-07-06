@@ -25,7 +25,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.ByteArrayOutputStream
-import java.io.File
 import java.io.IOException
 import java.io.InputStream
 
@@ -179,6 +178,19 @@ class LoginSignUpActivity :AppCompatActivity(){
         return User(email, password, userId,userImage)
     }
 
+    private fun getVerifySendEmail(): VerifySendEmail{
+        val email : String = binding.signupEmail.text.toString()
+
+        return VerifySendEmail(email)
+    }
+
+    private fun getVerifyCodeConfirm(): VerifyCodeConfirm{
+        val code : String = binding.verifyEmailTv.text.toString()
+
+        return VerifyCodeConfirm(code)
+    }
+
+
     private fun signUp() { //API연결
         if (binding.signupId.text.toString().isNotEmpty()) {
             Toast.makeText(this, "아이디를 입력해주세요.", Toast.LENGTH_SHORT).show()
@@ -209,8 +221,8 @@ class LoginSignUpActivity :AppCompatActivity(){
             override fun onResponse(call: Call<AuthResponse>, response: Response<AuthResponse>) {
                 //response의 body안에 서버 개발자가 만든게 들어있음
                 val resp: AuthResponse = response.body()!!
-                Log.d("SIGNUP/SUCCESS", resp.Code.toString())
-                when(resp.Code){
+                Log.d("SIGNUP/SUCCESS", resp.code.toString())
+                when(resp.code){
                     200->finish()
                     else->{
                         //아이디 중복확인 text 해줘야함.
@@ -229,7 +241,7 @@ class LoginSignUpActivity :AppCompatActivity(){
     }
 
 
-    //본인인증
+    //본인인증 --> 완료
     private fun verifyEmailSend(){
         if (binding.signupEmail.text.toString().isEmpty()) {
             Toast.makeText(this, "이메일을 입력해주세요.", Toast.LENGTH_SHORT).show()
@@ -237,21 +249,24 @@ class LoginSignUpActivity :AppCompatActivity(){
         }
 
         val authService2 = getRetrofit().create(AuthRetrofitInterface::class.java)
-        authService2.verifyEmailSend(binding.signupEmail.toString()).enqueue(object : Callback<VerifySendResponse>{
+        authService2.verifyEmailSend(getVerifySendEmail()).enqueue(object : Callback<VerifySendResponse>{
 
             override fun onResponse(call: Call<VerifySendResponse>,response: Response<VerifySendResponse>) {
                 Log.d("VERIFY_SEND/SUCCESS", response.toString())
+                Log.d("VERIFY_SEND/SUCCESS", response.code().toString()+' '+response.message().toString())
                 val resp: VerifySendResponse = response.body()!!
-                Log.d("VERIFY_SEND/SUCCESS", resp.Code.toString())
-                when (resp.Code) {
+                Log.d("VERIFY_SEND/SUCCESS", resp.message)
+                when (response.code()) {
                     200 -> {
-                        finish()
+                        //finish()
                         binding.emailSendTv.visibility= View.VISIBLE
-                        binding.emailSendTv.text="이메일에 본인인증 코드를 전송했습니다."
+                        binding.emailSendTv.text=resp.message
                         verifyEmailSend=1
                     }
                     else -> {
-                        //
+                        binding.emailSendTv.visibility= View.VISIBLE
+                        binding.emailSendTv.text="연결실패"
+
                     }
                 }
             }
@@ -272,26 +287,28 @@ class LoginSignUpActivity :AppCompatActivity(){
         }
 
         val authService3 = getRetrofit().create(AuthRetrofitInterface::class.java)
-        authService3.verifyConfirm(binding.verifyEmailTv.toString()).enqueue(object : Callback<VerifyConfirmResponse>{
+        authService3.verifyConfirm(getVerifyCodeConfirm()).enqueue(object : Callback<VerifyConfirmResponse>{
 
             override fun onResponse(call: Call<VerifyConfirmResponse>,response: Response<VerifyConfirmResponse>) {
+                Log.d("VERIFY_CONFIRM/SUCCESS", response.toString())
                 val resp: VerifyConfirmResponse = response.body()!!
-                Log.d("VERIFY_CONFIRM/SUCCESS", resp.Code.toString())
-                when (resp.Code) {
+                Log.d("VERIFY_CONFIRM/SUCCESS", resp.code.toString())
+                when (resp.code) {
                     200 -> {
-                        finish()
                         binding.verfiyEmailConfirmTv.visibility=View.VISIBLE
                         binding.verfiyEmailConfirmTv.text="인증성공했습니다."
                         verifyConfirm=1
                     }
                     else -> {
                         //인증틀렸을 때
+                        binding.verfiyEmailConfirmTv.visibility=View.VISIBLE
+                        binding.verfiyEmailConfirmTv.text="인증실패"
                     }
                 }
             }
 
             override fun onFailure(call: Call<VerifyConfirmResponse>, t: Throwable) {
-                TODO("Not yet implemented")
+                Log.d("VERIFY_CONFIRM/FAILURE", t.message.toString())
             }
         })
     }

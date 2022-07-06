@@ -9,8 +9,8 @@ interface AuthRetrofitInterface {
     fun signUp(@Body user:User): Call<AuthResponse>
 
     @POST("/mailConfirm")
-    fun verifyEmailSend(@Body email:String): Call<VerifySendResponse>
+    fun verifyEmailSend(@Body email: VerifySendEmail): Call<VerifySendResponse>
 
     @POST("/verifyCode")
-    fun verifyConfirm(@Body code:String): Call<VerifyConfirmResponse>
+    fun verifyConfirm(@Body code: VerifyCodeConfirm): Call<VerifyConfirmResponse>
 }
