@@ -223,6 +223,7 @@
             android:textColor="@color/black"
             android:textSize="16sp"
             android:hint="비밀번호 확인"
+            android:inputType="textPassword"
             android:singleLine="true"
             android:fontFamily="@font/font_regular"
             android:textColorHint="@color/gray"
