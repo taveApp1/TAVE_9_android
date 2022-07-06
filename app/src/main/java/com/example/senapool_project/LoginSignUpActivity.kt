@@ -265,7 +265,7 @@ class LoginSignUpActivity :AppCompatActivity(){
                     }
                     else -> {
                         binding.emailSendTv.visibility= View.VISIBLE
-                        binding.emailSendTv.text="연결실패"
+                        binding.emailSendTv.text=resp.message
 
                     }
                 }
@@ -291,9 +291,9 @@ class LoginSignUpActivity :AppCompatActivity(){
 
             override fun onResponse(call: Call<VerifyConfirmResponse>,response: Response<VerifyConfirmResponse>) {
                 Log.d("VERIFY_CONFIRM/SUCCESS", response.toString())
-                val resp: VerifyConfirmResponse = response.body()!!
-                Log.d("VERIFY_CONFIRM/SUCCESS", resp.code.toString())
-                when (resp.code) {
+                //val resp: VerifyConfirmResponse = response.body()!!
+                //Log.d("VERIFY_CONFIRM/SUCCESS", resp.code.toString())
+                when (response.code()) {
                     200 -> {
                         binding.verfiyEmailConfirmTv.visibility=View.VISIBLE
                         binding.verfiyEmailConfirmTv.text="인증성공했습니다."
