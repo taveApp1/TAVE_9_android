@@ -2,31 +2,18 @@ package com.example.senapool_project
 
 import android.app.Activity
 import android.content.Intent
-import android.content.res.Resources
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Matrix
 
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Base64
-import android.util.Base64.NO_WRAP
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.exifinterface.media.ExifInterface
 import com.example.senapool_project.databinding.ActivityLoginSingnupBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.ByteArrayOutputStream
-import java.io.IOException
-import java.io.InputStream
+import java.io.File
 
 class LoginSignUpActivity :AppCompatActivity(){
 
@@ -34,6 +21,7 @@ class LoginSignUpActivity :AppCompatActivity(){
     lateinit var profileImageBase64: String
     var verifyEmailSend: Int = 0
     var verifyConfirm: Int = 0
+    lateinit var file: File
 
     /*회원가입 완료 누르면 다시 백하기*/
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,22 +66,9 @@ class LoginSignUpActivity :AppCompatActivity(){
 
         if (requestCode == 102 && resultCode == Activity.RESULT_OK){
             val currentImageURL = intent?.data
-            // Base64 인코딩부분
-            val ins: InputStream? = currentImageURL?.let {
-                applicationContext.contentResolver.openInputStream(
-                    it
-                )
-            }
-            val img: Bitmap = BitmapFactory.decodeStream(ins)
-            ins?.close()
-            val resized = Bitmap.createScaledBitmap(img, 256, 256, true)
-            val byteArrayOutputStream = ByteArrayOutputStream()
-            resized.compress(Bitmap.CompressFormat.JPEG, 60, byteArrayOutputStream)
-            val byteArray: ByteArray = byteArrayOutputStream.toByteArray()
-            val outStream = ByteArrayOutputStream()
-            val res: Resources = resources
-            profileImageBase64 = Base64.encodeToString(byteArray, NO_WRAP)
-            // 여기까지 인코딩 끝
+            Log.d("IMAGE/SUCCESS",currentImageURL.toString())
+
+            file=File(currentImageURL.toString())
 
             // 이미지 뷰에 선택한 이미지 출력
             binding.settingEditImageIv.setImageURI(currentImageURL)
@@ -103,68 +78,9 @@ class LoginSignUpActivity :AppCompatActivity(){
                 e.printStackTrace()
             }
         } else{
-            Log.d("ActivityResult", "something wrong")
+            Log.d("IMAGE/FAIL", "something wrong")
         }
     }
-
-
-
-    // 갤러리에서 사진 선택 후 실행
-    @RequiresApi(Build.VERSION_CODES.N)
-    val getFromAlbumResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val uri = result.data?.data // 선택한 이미지의 주소
-            // 이미지 파일 읽어와서 설정하기
-            if (uri != null) {
-                // 사진 가져오기
-                val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(uri))
-                // 사진의 회전 정보 가져오기
-                val orientation = getOrientationOfImage(uri).toFloat()
-                // 이미지 회전하기
-                val newBitmap = getRotatedBitmap(bitmap, orientation)
-                // 회전된 이미지로 imaView 설정
-                binding.settingEditImageIv.setImageBitmap(newBitmap)
-
-            }
-            else binding.settingEditImageIv.setImageResource(R.drawable.user)
-        }
-    }
-
-    // 이미지 회전 정보 가져오기
-    @RequiresApi(Build.VERSION_CODES.N)
-    private fun getOrientationOfImage(uri: Uri): Int {
-        // uri -> inputStream
-        val inputStream = contentResolver.openInputStream(uri)
-        val exif: ExifInterface? = try {
-            ExifInterface(inputStream!!)
-        } catch (e: IOException) {
-            e.printStackTrace()
-            return -1
-        }
-        inputStream.close()
-
-        // 회전된 각도 알아내기
-        val orientation = exif?.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
-        if (orientation != -1) {
-            when (orientation) {
-                ExifInterface.ORIENTATION_ROTATE_90 -> return 90
-                ExifInterface.ORIENTATION_ROTATE_180 -> return 180
-                ExifInterface.ORIENTATION_ROTATE_270 -> return 270
-            }
-        }
-        return 0
-    }
-
-    // 이미지 회전하기
-    @Throws(Exception::class)
-    private fun getRotatedBitmap(bitmap: Bitmap?, degrees: Float): Bitmap? {
-        if (bitmap == null) return null
-        if (degrees == 0F) return bitmap
-        val m = Matrix()
-        m.setRotate(degrees, bitmap.width.toFloat() / 2, bitmap.height.toFloat() / 2)
-        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, m, true)
-    }
-
 
 
 
@@ -173,7 +89,7 @@ class LoginSignUpActivity :AppCompatActivity(){
         val email : String = binding.signupEmail.text.toString()
         val password: String = binding.signupPassword.text.toString()
         val userId: String = binding.signupId.text.toString()
-        val userImage: String = profileImageBase64
+        val userImage: File = file
 
         return User(email, password, userId,userImage)
     }
@@ -192,7 +108,7 @@ class LoginSignUpActivity :AppCompatActivity(){
 
 
     private fun signUp() { //API연결
-        if (binding.signupId.text.toString().isNotEmpty()) {
+        if (binding.signupId.text.toString().isEmpty()) {
             Toast.makeText(this, "아이디를 입력해주세요.", Toast.LENGTH_SHORT).show()
             return //함수 끝나도록.
         }
