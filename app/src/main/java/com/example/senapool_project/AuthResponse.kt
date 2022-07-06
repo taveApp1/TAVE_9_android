@@ -3,13 +3,14 @@ package com.example.senapool_project
 import com.google.gson.annotations.SerializedName
 
 data class AuthResponse(
-    @SerializedName(value = "Code") val Code:Int
+    @SerializedName(value = "code") val code:Int
     )
 
 data class VerifySendResponse(
-    @SerializedName(value = "Code") val Code:Int
+    //@SerializedName(value = "code") val code:Int,
+    @SerializedName(value = "message") val message:String
 )
 
 data class VerifyConfirmResponse(
-    @SerializedName(value = "Code") val Code:Int
+    @SerializedName(value = "code") val code:Int
 )
