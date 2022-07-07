@@ -2,6 +2,7 @@ package com.example.senapool_project
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 
 import android.os.Bundle
 import android.provider.MediaStore
@@ -10,10 +11,17 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.senapool_project.databinding.ActivityLoginSingnupBinding
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.OutputStream
 
 class LoginSignUpActivity :AppCompatActivity(){
 
@@ -21,7 +29,7 @@ class LoginSignUpActivity :AppCompatActivity(){
     lateinit var profileImageBase64: String
     var verifyEmailSend: Int = 0
     var verifyConfirm: Int = 0
-    lateinit var file: File
+    var file: File = File("drawable/user.png")
 
     /*회원가입 완료 누르면 다시 백하기*/
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,9 +75,8 @@ class LoginSignUpActivity :AppCompatActivity(){
         if (requestCode == 102 && resultCode == Activity.RESULT_OK){
             val currentImageURL = intent?.data
             Log.d("IMAGE/SUCCESS",currentImageURL.toString())
-
-            file=File(currentImageURL.toString())
-
+            file=File(createCopyAndReturnRealPath(currentImageURL!!))
+            Log.d("IMAGE/SUCCESS",createCopyAndReturnRealPath(currentImageURL!!).toString())
             // 이미지 뷰에 선택한 이미지 출력
             binding.settingEditImageIv.setImageURI(currentImageURL)
             try {
@@ -82,17 +89,32 @@ class LoginSignUpActivity :AppCompatActivity(){
         }
     }
 
+    fun createCopyAndReturnRealPath(uri: Uri) :String? {
+        val context = applicationContext
+        val contentResolver = context.contentResolver ?: return null
+
+        // Create file path inside app's data dir
+        val filePath = (context.applicationInfo.dataDir + File.separator
+                + System.currentTimeMillis())
+        val file = File(filePath)
+        try {
+            val inputStream = contentResolver.openInputStream(uri) ?: return null
+            val outputStream: OutputStream = FileOutputStream(file)
+            val buf = ByteArray(1024)
+            var len: Int
+            while (inputStream.read(buf).also { len = it } > 0) outputStream.write(buf, 0, len)
+            outputStream.close()
+            inputStream.close()
+        } catch (e: IOException) {
+            e.printStackTrace()
 
 
-
-    private fun getUser(): User{
-        val email : String = binding.signupEmail.text.toString()
-        val password: String = binding.signupPassword.text.toString()
-        val userId: String = binding.signupId.text.toString()
-        val userImage: File = file
-
-        return User(email, password, userId,userImage)
+        }
+        return file.getAbsolutePath()
     }
+
+
+
 
     private fun getVerifySendEmail(): VerifySendEmail{
         val email : String = binding.signupEmail.text.toString()
@@ -130,18 +152,29 @@ class LoginSignUpActivity :AppCompatActivity(){
             return //함수 끝나도록.
         }
 
+        val requestFile = RequestBody.create("image".toMediaTypeOrNull(), file)
+        Log.d("FILE",file.toString())
+        val body = MultipartBody.Part.createFormData("userImage", file.name, requestFile)
+        val email : String = binding.signupEmail.text.toString()
+        val password: String = binding.signupPassword.text.toString()
+        val userId: String = binding.signupId.text.toString()
+
         val authService = getRetrofit().create(AuthRetrofitInterface::class.java)
-        authService.signUp(getUser()).enqueue(object : Callback<AuthResponse> {
+        authService.signUp(email,password,userId,body).enqueue(object : Callback<AuthResponse> {
 
             //응답이 왔을 때 처리하는 부분
             override fun onResponse(call: Call<AuthResponse>, response: Response<AuthResponse>) {
                 //response의 body안에 서버 개발자가 만든게 들어있음
+                Log.d("SIGNUP/SUCCESS", response.toString())
                 val resp: AuthResponse = response.body()!!
                 Log.d("SIGNUP/SUCCESS", resp.code.toString())
                 when(resp.code){
-                    200->finish()
+                    2000->{
+                        Toast.makeText(this@LoginSignUpActivity,"회원가입을 완료하였습니다.",Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
                     else->{
-                        //아이디 중복확인 text 해줘야함.
+                        Toast.makeText(this@LoginSignUpActivity,resp.message,Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -169,14 +202,13 @@ class LoginSignUpActivity :AppCompatActivity(){
 
             override fun onResponse(call: Call<VerifySendResponse>,response: Response<VerifySendResponse>) {
                 Log.d("VERIFY_SEND/SUCCESS", response.toString())
-                Log.d("VERIFY_SEND/SUCCESS", response.code().toString()+' '+response.message().toString())
                 val resp: VerifySendResponse = response.body()!!
                 Log.d("VERIFY_SEND/SUCCESS", resp.message)
-                when (response.code()) {
-                    200 -> {
+                when (resp.code) {
+                    2000 -> {
                         //finish()
                         binding.emailSendTv.visibility= View.VISIBLE
-                        binding.emailSendTv.text=resp.message
+                        binding.emailSendTv.text="이메일로 인증코드를 전송했습니다."
                         verifyEmailSend=1
                     }
                     else -> {
@@ -207,12 +239,12 @@ class LoginSignUpActivity :AppCompatActivity(){
 
             override fun onResponse(call: Call<VerifyConfirmResponse>,response: Response<VerifyConfirmResponse>) {
                 Log.d("VERIFY_CONFIRM/SUCCESS", response.toString())
-                //val resp: VerifyConfirmResponse = response.body()!!
+                val resp: VerifyConfirmResponse = response.body()!!
                 //Log.d("VERIFY_CONFIRM/SUCCESS", resp.code.toString())
-                when (response.code()) {
-                    200 -> {
+                when (resp.code) {
+                    2000 -> {
                         binding.verfiyEmailConfirmTv.visibility=View.VISIBLE
-                        binding.verfiyEmailConfirmTv.text="인증성공했습니다."
+                        binding.verfiyEmailConfirmTv.text="인증을 성공했습니다."
                         verifyConfirm=1
                     }
                     else -> {
@@ -228,6 +260,7 @@ class LoginSignUpActivity :AppCompatActivity(){
             }
         })
     }
+
 
 
 }

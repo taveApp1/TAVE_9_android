@@ -12,6 +12,7 @@ import retrofit2.Response
 
 class LoginMainActivity :AppCompatActivity(){
     lateinit var binding: ActivityLoginBinding
+    lateinit var intent1:Intent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,7 +21,7 @@ class LoginMainActivity :AppCompatActivity(){
 
         /*로그인 버튼 누르면 그 때 MainActivity.kt로 이동*/
         binding.loginButton.setOnClickListener{
-            val intent=Intent(this,MainActivity::class.java)
+            intent1=Intent(this,MainActivity::class.java)
             login()
         }
 
@@ -68,12 +69,14 @@ class LoginMainActivity :AppCompatActivity(){
                 //response의 body안에 서버 개발자가 만든게 들어있음
                 val resp: LoginResponse = response.body()!!
                 Log.d("LOGIN/SUCCESS", resp.toString())
-                when(response.code()){
-                    200->{
-                        startActivity(intent)
+                when(resp.code){
+                    2000->{
+                        Log.d("LOGIN/SUCCESS", resp.result.toString())
+                        startActivity(intent1)
                     }
                     else->{
-                        Log.d("LOGIN/FAIL","서버에러"+response.code())
+                        Toast.makeText(this@LoginMainActivity,resp.message,Toast.LENGTH_SHORT).show()
+                        Log.d("LOGIN/FAIL",resp.code.toString())
                         //아이디 중복확인 text 해줘야함.
                     }
                 }

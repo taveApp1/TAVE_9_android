@@ -106,7 +106,7 @@
             android:layout_marginTop="20dp"
             android:textColor="@color/white"
             android:textSize="15sp"
-            android:hint="식물 물 주는 주기"
+            android:hint="마지막으로 물 준 날짜"
             android:fontFamily="@font/font_regular"
             android:textColorHint="@color/white"
             android:backgroundTint="@color/white"
