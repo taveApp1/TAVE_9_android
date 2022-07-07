@@ -72,6 +72,8 @@ class LoginMainActivity :AppCompatActivity(){
                 when(resp.code){
                     2000->{
                         Log.d("LOGIN/SUCCESS", resp.result.toString())
+                        intent1.putExtra("token",resp.result.tokenDto.token)
+                        intent1.putExtra("userPK",resp.result.LoginUser.userPK)
                         startActivity(intent1)
                     }
                     else->{

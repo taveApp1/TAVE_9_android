@@ -21,4 +21,7 @@ interface AuthRetrofitInterface {
 
     @POST("/user/login")
     fun login(@Body login:Login): Call<LoginResponse>
+
+    @GET("/myplant-list/{userPK}")
+    fun MyPlantList(@Path("userPK") userPK: String): Call<MyPlantListResponse>
 }
