@@ -19,17 +19,20 @@ class MainActivity : AppCompatActivity(){
         Log.d("MAIN/INTENT",token+' '+userPK)
 
 
-
         initBottomNavigation(token!!,userPK!!)
-    }
-
-    private fun initBottomNavigation(token:String, userPK:String) {
 
         var fragment2 = MyPlantFragment()
         var bundle = Bundle()
-        bundle.putString("token",token)
+        //bundle.putString("token",token)
         bundle.putString("userPK",userPK)
         fragment2.arguments = bundle //fragment의 arguments에 데이터를 담은 bundle을 넘겨줌
+
+        supportFragmentManager!!.beginTransaction()
+            .replace(R.id.main_frm, fragment2)
+            .commit()
+    }
+
+    private fun initBottomNavigation(token:String, userPK:String) {
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.main_frm, MyPlantFragment())

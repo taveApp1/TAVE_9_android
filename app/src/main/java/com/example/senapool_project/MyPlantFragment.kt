@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import com.bumptech.glide.Glide
 import com.example.senapool_project.databinding.FragmentMyPlantBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -17,7 +18,9 @@ class MyPlantFragment : Fragment() {
 
     lateinit var binding: FragmentMyPlantBinding
     private lateinit var myplantRVAdapter: MyPlantRVAdapter
-    
+    lateinit var token: String
+    lateinit var userPK: String
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,8 +29,9 @@ class MyPlantFragment : Fragment() {
     ): View? {
         binding = FragmentMyPlantBinding.inflate(inflater,container,false)
 
-
-
+        //token = arguments?.getString("token").toString()
+        userPK = arguments?.getString("userPK").toString()
+        Log.d("MYPLANT/PK 입니다",userPK)
 
         binding.myPlantPlusIb.setOnClickListener {
             startActivity(Intent(activity, MyPlantEnrollActivity::class.java))
@@ -35,12 +39,11 @@ class MyPlantFragment : Fragment() {
 
         return binding.root
     }
+
     override fun onStart() {
         super.onStart()
-        val token = arguments?.getString("token")
-        val userPK = arguments?.getString("userPK")
-        Log.d("MYPLANT/PK",userPK.toString())
-        getPlant("14")
+
+        getPlant(userPK)
     }
 
     private fun initRecyclerView(result: plantDtoList) {
@@ -64,6 +67,8 @@ class MyPlantFragment : Fragment() {
                 when(resp.code){
                     2000->{
                         initRecyclerView(resp.result.plantListDto)
+                        Glide.with(context!!).load(resp.result.userImage).into(binding.myPlantUserImageIv)
+                        binding.myPlantUserNameTv.text=resp.result.userId
                     }
                     else->{
                         //Toast.makeText(this@MyPlantFragment,resp.message, Toast.LENGTH_SHORT).show()
