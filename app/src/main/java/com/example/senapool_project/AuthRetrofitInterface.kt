@@ -22,7 +22,6 @@ interface AuthRetrofitInterface {
     @POST("/user/login")
     fun login(@Body login:Login): Call<LoginResponse>
 
-    @Headers("Authorization: {token}")
-    @GET("/{userPK}")
-    fun MyPlantList(): Call<MyPlantListResponse>
+    @GET("/myplant-list/{userPK}")
+    fun MyPlantList(@Path("userPK") userPK: String): Call<MyPlantListResponse>
 }

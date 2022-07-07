@@ -53,6 +53,12 @@ data class MyPlantListResult(
 )
 
 data class plantDtoList(
-    @SerializedName("plantDtoList") var plantDtoList: ArrayList<MyPlant>
+    @SerializedName("plantDtoList") var plantDtoList: ArrayList<MyPlantList>
+)
+
+data class MyPlantList(
+    @SerializedName("plantPK") var userPK: Int?=null,
+    @SerializedName("plantName") var plantName: String?="",
+    @SerializedName("plantImage") var plantImage: String?="",
 )
 
