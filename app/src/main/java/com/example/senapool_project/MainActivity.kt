@@ -1,7 +1,8 @@
 package com.example.senapool_project
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.example.senapool_project.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(){
@@ -13,10 +14,22 @@ class MainActivity : AppCompatActivity(){
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initBottomNavigation()
+        val token = intent.getStringExtra("token")
+        val userPK = intent.getStringExtra("userPK")
+        Log.d("MAIN/INTENT",token+' '+userPK)
+
+
+
+        initBottomNavigation(token!!,userPK!!)
     }
 
-    private fun initBottomNavigation() {
+    private fun initBottomNavigation(token:String, userPK:String) {
+
+        var fragment2 = MyPlantFragment()
+        var bundle = Bundle()
+        bundle.putString("token",token)
+        bundle.putString("userPK",userPK)
+        fragment2.arguments = bundle //fragment의 arguments에 데이터를 담은 bundle을 넘겨줌
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.main_frm, MyPlantFragment())

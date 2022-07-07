@@ -21,18 +21,22 @@ class MyPlantFragment : Fragment() {
     ): View? {
         binding = FragmentMyPlantBinding.inflate(inflater,container,false)
 
+        val token = arguments?.getString("token")
+        val userPK = arguments?.getString("userPK")
+
+
         //데이터 리스트 생성 더미 데이터
         //서버가 없기에 일단 더미 데이터 만들어놓음.
         plantDatas.apply {
-            add(MyPlant("식물1",R.drawable.my_plant_image_example))
-            add(MyPlant("식물2",R.drawable.my_plant_image_example))
-            add(MyPlant("식물3",R.drawable.my_plant_image_example))
-            add(MyPlant("식물4",R.drawable.my_plant_image_example))
-            add(MyPlant("식물5",R.drawable.my_plant_image_example))
-            add(MyPlant("식물6",R.drawable.my_plant_image_example))
-            add(MyPlant("식물7",R.drawable.my_plant_image_example))
-            add(MyPlant("식물8",R.drawable.my_plant_image_example))
-            add(MyPlant("식물9",R.drawable.my_plant_image_example))
+//            add(MyPlant("식물1",R.drawable.my_plant_image_example))
+//            add(MyPlant("식물2",R.drawable.my_plant_image_example))
+//            add(MyPlant("식물3",R.drawable.my_plant_image_example))
+//            add(MyPlant("식물4",R.drawable.my_plant_image_example))
+//            add(MyPlant("식물5",R.drawable.my_plant_image_example))
+//            add(MyPlant("식물6",R.drawable.my_plant_image_example))
+//            add(MyPlant("식물7",R.drawable.my_plant_image_example))
+//            add(MyPlant("식물8",R.drawable.my_plant_image_example))
+//            add(MyPlant("식물9",R.drawable.my_plant_image_example))
         }
 
         val myplantRVAdapter = MyPlantRVAdapter(plantDatas)

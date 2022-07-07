@@ -46,8 +46,8 @@ class MyPlantRVAdapter(private val myPlantList: ArrayList<MyPlant>): RecyclerVie
     inner class ViewHolder(val binding: ItemMyPlantBinding): RecyclerView.ViewHolder(binding.root){
 
         fun bind(myPlant: MyPlant){
-            binding.itemMyPlantPlantNameTv.text=myPlant.name
-            binding.itemMyPlantImgIv.setImageResource(myPlant.Img!!)
+            binding.itemMyPlantPlantNameTv.text=myPlant.plantName
+            binding.itemMyPlantImgIv.setImageResource(myPlant.plantImage!!)
         }
 
     }
