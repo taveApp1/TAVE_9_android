@@ -1,25 +1,19 @@
 package com.example.senapool_project
 
+import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.senapool_project.databinding.FragmentSettingBinding
 import com.example.senapool_project.databinding.ItemMyPlantBinding
 import com.example.senapool_project.databinding.ItemMyPlantDiaryBinding
 
 //어댑터가 아이템뷰 객체들에게 바인딩해주려면 전에 만든 데이터 리스트를 매개변수로 받아와야함.
-class DiaryRVAdapter(private val DiaryList: ArrayList<Diary>): RecyclerView.Adapter<DiaryRVAdapter.ViewHolder>(){
-
-    //클릭이벤트를 구현하기 위해 인터페이스 사용. 외부에서 클릭이벤트를 사용하기 위해서.
-    interface MyItemClickListener{
-        fun onItemClick()
-    }
-
-    private lateinit var mItemClickListener: MyItemClickListener
-    fun setMyItemClickListener(itemClickListener: MyItemClickListener){
-        mItemClickListener = itemClickListener
-    }
-    //어댑터 외부에 있는 마이플랜트프래그먼트에서 던져주면 된다.
+class DiaryRVAdapter(val context: Context, val result : diaryPrevListDto): RecyclerView.Adapter<DiaryRVAdapter.ViewHolder>(){
 
     //사용하고자 하는 아이템뷰 객체를 만들어야한다. 그리고 나서 만들어진 아이템뷰 객체를 재활용할 수 있도록 ViewHolder에게 던져줘야 한다.(-> return ViewHolder(binding))
     //얘는 재활용하기 때문에 처음 몇번만 호출되고 말음.
@@ -33,25 +27,43 @@ class DiaryRVAdapter(private val DiaryList: ArrayList<Diary>): RecyclerView.Adap
     //position : 인덱스 아이디
     //클릭 이벤트는 여기서 작성해주는 것이 좋다.
     override fun onBindViewHolder(holder: DiaryRVAdapter.ViewHolder, position: Int) {
-        holder.bind(DiaryList[position])
+
+        if(result.diaryPrevDtoList[position].image == "" || result.diaryPrevDtoList[position].image == null){
+
+        } else {
+            Log.d("image",result.diaryPrevDtoList[position].image )
+            Glide.with(context).load(result.diaryPrevDtoList[position].image).into(holder.image) //적용시키는 방법
+        }
+        holder.title.text = result.diaryPrevDtoList[position].title // 제목 적용
+        holder.date.text = result.diaryPrevDtoList[position].createdAt
+        holder.content.text = result.diaryPrevDtoList[position].title //content가 들어가야하는데 없어서 일단 title로 해놓음.
+
         holder.itemView.setOnClickListener{
-            mItemClickListener.onItemClick()
+            mItemClickListener.onItemClick(result.diaryPrevDtoList[position].diaryPK)
         }
     }
 
     //데이터셋의 크기를 알려주는 함수
 
-    override fun getItemCount(): Int = DiaryList.size
+    override fun getItemCount(): Int = result.diaryPrevDtoList.size
 
     //ViewHolder 클래스는 아이템뷰 객체들이 날라가지 않도록 담고 있는 그릇.
     inner class ViewHolder(val binding: ItemMyPlantDiaryBinding): RecyclerView.ViewHolder(binding.root){
 
-        fun bind(diary: Diary){
-            binding.itemMyPlantDiaryDateTv.text=diary.date
-            binding.itemMyPlantDiaryTitleTv.text=diary.title
-            binding.itemMyPlantDiaryContentTv.text=diary.content
-            binding.itemMyPlantDiaryImgIv.setImageResource(diary.img!!)
-        }
+        val date: TextView = binding.itemMyPlantDiaryDateTv
+        val title : TextView = binding.itemMyPlantDiaryTitleTv
+        val content : TextView = binding.itemMyPlantDiaryContentTv
+        val image: ImageView = binding.itemMyPlantDiaryImgIv
 
+    }
+
+    interface MyItemClickListener{
+        //fun onRemoveSong(plantPK: Int)
+        fun onItemClick(diaryPK: String?)
+    }
+
+    private lateinit var mItemClickListener: MyItemClickListener
+    fun setMyItemClickListener(itemClickListener: MyItemClickListener){
+        mItemClickListener = itemClickListener
     }
 }
