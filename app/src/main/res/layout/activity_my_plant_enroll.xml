@@ -31,6 +31,7 @@
             />
         </androidx.cardview.widget.CardView>
         <ImageView
+            android:id="@+id/my_plant_gallery_iv"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@drawable/image"
@@ -135,7 +136,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:textSize="15sp"
-            android:hint="0000/00/00"
+            android:hint="YYYY-MM-DD"
             android:layout_marginEnd="2dp"
             android:fontFamily="@font/font_regular"
             android:textColorHint="@color/white"
@@ -144,6 +145,7 @@
             app:layout_constraintTop_toTopOf="@id/my_plant_enroll_start_date_tv"
             app:layout_constraintBottom_toBottomOf="@id/my_plant_enroll_start_date_tv"/>
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/my_plant_enroll_finish_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"

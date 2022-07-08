@@ -20,6 +20,7 @@ class MyPlantFragment : Fragment() {
     private lateinit var myplantRVAdapter: MyPlantRVAdapter
     lateinit var token: String
     lateinit var userPK: String
+    var check:Int = 0
 
 
     override fun onCreateView(
@@ -29,21 +30,32 @@ class MyPlantFragment : Fragment() {
     ): View? {
         binding = FragmentMyPlantBinding.inflate(inflater,container,false)
 
-        //token = arguments?.getString("token").toString()
+        token = arguments?.getString("token").toString()
         userPK = arguments?.getString("userPK").toString()
         Log.d("MYPLANT/PK 입니다",userPK)
 
         binding.myPlantPlusIb.setOnClickListener {
-            startActivity(Intent(activity, MyPlantEnrollActivity::class.java))
+            val intent = Intent(activity,MyPlantEnrollActivity::class.java)
+            intent.putExtra("userPK",userPK) //데이터 넣기
+            intent.putExtra("token",token) //데이터 넣기
+            startActivity(intent)
+            //startActivity(Intent(activity, MyPlantEnrollActivity::class.java))
         }
+
 
         return binding.root
     }
 
     override fun onStart() {
         super.onStart()
+        Log.d("MYPLANT","onstart")
 
         getPlant(userPK)
+
+
+
+
+
     }
 
     private fun initRecyclerView(result: plantDtoList) {
@@ -54,7 +66,7 @@ class MyPlantFragment : Fragment() {
 
 
 
-    fun getPlant(userPK:String) {
+    fun getPlant(userPK:String){
         val authService = getRetrofit().create(AuthRetrofitInterface::class.java)
         authService.MyPlantList(userPK).enqueue(object : Callback<MyPlantListResponse> {
 
@@ -67,8 +79,30 @@ class MyPlantFragment : Fragment() {
                 when(resp.code){
                     2000->{
                         initRecyclerView(resp.result.plantListDto)
+                        Log.d("USERIMAGE/SUCCESS",resp.result.userImage.toString())
                         Glide.with(context!!).load(resp.result.userImage).into(binding.myPlantUserImageIv)
                         binding.myPlantUserNameTv.text=resp.result.userId
+
+                        binding.myPlantRv.adapter = myplantRVAdapter
+                        binding.myPlantRv.layoutManager = GridLayoutManager(context, 2)
+                        check=2000
+                        Log.d("MYPLANT/check",check.toString())
+                        if (check==2000) {
+                            Log.d("MYPLANT/check","실행된다")
+                            myplantRVAdapter.setMyItemClickListener(object : MyPlantRVAdapter.MyItemClickListener {
+                                override fun onItemClick() {
+                                    //myplantdiarylist프래그먼트로 이동!
+                                    (context as MainActivity).supportFragmentManager.beginTransaction()
+                                        .replace(R.id.main_frm, MyPlantDiaryListFragment())
+                                        .commitAllowingStateLoss()
+                                }
+
+//            override fun onRemoveSong(plantPK: Int) {
+//                TODO("Not yet implemented")
+//            }
+                            })
+                        }
+
                     }
                     else->{
                         //Toast.makeText(this@MyPlantFragment,resp.message, Toast.LENGTH_SHORT).show()
@@ -83,5 +117,6 @@ class MyPlantFragment : Fragment() {
         })
         //비동기작업이니까 함수가 잘 실행되었는지 확인차 찍어보기
         Log.d("MYPlANT", "HELLO")
+
     }
 }

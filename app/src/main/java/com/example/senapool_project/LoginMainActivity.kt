@@ -14,6 +14,7 @@ class LoginMainActivity :AppCompatActivity(){
     lateinit var binding: ActivityLoginBinding
     lateinit var intent1:Intent
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityLoginBinding.inflate(layoutInflater)
@@ -72,8 +73,10 @@ class LoginMainActivity :AppCompatActivity(){
                 when(resp.code){
                     2000->{
                         Log.d("LOGIN/SUCCESS", resp.result.toString())
-                        intent1.putExtra("token",resp.result.tokenDto.token)
-                        intent1.putExtra("userPK",resp.result.LoginUser.userPK)
+
+                        intent1.putExtra("token",resp.result.token)
+                        intent1.putExtra("userPK",resp.result.userPk)
+
                         startActivity(intent1)
                     }
                     else->{

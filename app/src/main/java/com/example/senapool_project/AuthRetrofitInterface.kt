@@ -24,4 +24,15 @@ interface AuthRetrofitInterface {
 
     @GET("/myplant-list/{userPK}")
     fun MyPlantList(@Path("userPK") userPK: String): Call<MyPlantListResponse>
+
+    @Multipart
+    @POST("/myplant-list/{userPK}")
+    fun MyPlantEnroll(@Header("Authorization") token:String,
+                      @Path("userPK") userPK: String,
+                      @Query("lastWater") lastWater:String,
+                      @Query("plantName") plantName:String,
+                      @Query("plantType") plantType:String,
+                      @Query("startDay") startDay:String,
+                      @Query("waterPeriod") waterPeriod:String,
+                      @Part file: MultipartBody.Part): Call<MyPlantEnrollResponse>
 }
