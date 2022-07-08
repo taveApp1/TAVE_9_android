@@ -35,6 +35,9 @@ class MyPlantRVAdapter(val context: Context, val result : plantDtoList): Recycle
         }
         holder.plantName.text = result.plantDtoList[position].plantName // 제목 적용
 
+        holder.itemView.setOnClickListener{
+            mItemClickListener.onItemClick()
+        }
     }
 
     //데이터셋의 크기를 알려주는 함수
@@ -50,12 +53,14 @@ class MyPlantRVAdapter(val context: Context, val result : plantDtoList): Recycle
     }
 
     interface MyItemClickListener{
-        fun onRemoveSong(plantPK: Int)
+        //fun onRemoveSong(plantPK: Int)
+        fun onItemClick()
     }
 
     private lateinit var mItemClickListener: MyItemClickListener
-
     fun setMyItemClickListener(itemClickListener: MyItemClickListener){
         mItemClickListener = itemClickListener
     }
+
+
 }
