@@ -36,7 +36,7 @@ data class plantDtoList(
 )
 
 data class MyPlantList(
-    @SerializedName("plantPK") var userPK: Int?=null,
+    @SerializedName("plantPK") var plantPK: String?="",
     @SerializedName("plantName") var plantName: String?="",
     @SerializedName("plantImage") var plantImage: String?="",
 )

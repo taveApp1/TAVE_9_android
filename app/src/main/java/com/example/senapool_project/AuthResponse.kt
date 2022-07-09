@@ -47,3 +47,60 @@ data class MyPlantEnrollResponse(
     @SerializedName(value = "code") val code:Int,
     @SerializedName(value = "message") val message:String
 )
+
+data class MyPlantDiaryListResponse(
+    @SerializedName(value = "isSuccess") val isSuccess:Boolean,
+    @SerializedName(value = "code") val code:Int,
+    @SerializedName(value = "message") val message:String,
+    @SerializedName(value = "result") val result: MyPlantDiaryList
+)
+
+data class MyPlantDiaryList(
+    @SerializedName("plantInfoDto") val plantInfoDto: plantInfoDto,
+    @SerializedName("diaryPrevListDto") val diaryPrevListDto: diaryPrevListDto,
+)
+
+data class plantInfoDto(
+    @SerializedName("plantPK") var plantPK: String?="",
+    @SerializedName("plantImage") var plantImage: String?="",
+    @SerializedName("plantName") var plantName: String?="",
+    @SerializedName("plantType") var plantType: String?="",
+    @SerializedName("waterPeriod") var waterPeriod: Int?=null,
+    @SerializedName("period") var period: Int?=null
+)
+
+data class diaryPrevListDto(
+    @SerializedName("diaryPrevDtoList") var diaryPrevDtoList: ArrayList<DiaryList>
+)
+
+data class DiaryList(
+    @SerializedName("content") var content:String="",
+    @SerializedName("title") var title:String="",
+    @SerializedName("publish") var publish:Boolean,
+    @SerializedName("image") var image:String="",
+    @SerializedName("diaryPK") var diaryPK:String="",
+    @SerializedName("createdAt") var createdAt:String="",
+)
+
+
+data class MyPlantDiaryDetailResponse(
+    @SerializedName(value = "isSuccess") val isSuccess:Boolean,
+    @SerializedName(value = "code") val code:Int,
+    @SerializedName(value = "message") val message:String,
+    @SerializedName(value = "result") val result: plantDiaryInfoDto
+)
+
+data class plantDiaryInfoDto(
+    @SerializedName("plantDiaryInfoDto") var plantDiaryInfoDto:DiaryDetail
+)
+
+data class DiaryDetail(
+    @SerializedName("content") var content:String="",
+    @SerializedName("title") var title:String="",
+    @SerializedName("publish") var publish:Boolean,
+    @SerializedName("diaryImage") var image:String="",
+    @SerializedName("diaryPK") var diaryPK:String="",
+    @SerializedName("createdAt") var createdAt:String="",
+    @SerializedName("updatedAt") var updatedAt:String="",
+    @SerializedName("likesCount") var likesCount:Int?=null
+)

@@ -90,12 +90,21 @@ class MyPlantFragment : Fragment() {
                         if (check==2000) {
                             Log.d("MYPLANT/check","실행된다")
                             myplantRVAdapter.setMyItemClickListener(object : MyPlantRVAdapter.MyItemClickListener {
-                                override fun onItemClick() {
+                                override fun onItemClick(plantPK: String?) {
+                                    var myplantdiarylistfragment = MyPlantDiaryListFragment()
+                                    var bundle = Bundle()
+                                    bundle.putString("token",token)
+                                    bundle.putString("userPK",userPK)
+                                    bundle.putString("plantPK",plantPK)
+                                    myplantdiarylistfragment.arguments = bundle //fragment의 arguments에 데이터를 담은 bundle을 넘겨줌
+
                                     //myplantdiarylist프래그먼트로 이동!
                                     (context as MainActivity).supportFragmentManager.beginTransaction()
-                                        .replace(R.id.main_frm, MyPlantDiaryListFragment())
+                                        .replace(R.id.main_frm, myplantdiarylistfragment)
                                         .commitAllowingStateLoss()
                                 }
+
+
 
 //            override fun onRemoveSong(plantPK: Int) {
 //                TODO("Not yet implemented")

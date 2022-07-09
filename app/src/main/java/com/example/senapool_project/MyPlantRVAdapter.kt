@@ -8,7 +8,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.senapool_project.databinding.FragmentSettingBinding
 import com.example.senapool_project.databinding.ItemMyPlantBinding
 
 //어댑터가 아이템뷰 객체들에게 바인딩해주려면 전에 만든 데이터 리스트를 매개변수로 받아와야함.
@@ -36,7 +35,7 @@ class MyPlantRVAdapter(val context: Context, val result : plantDtoList): Recycle
         holder.plantName.text = result.plantDtoList[position].plantName // 제목 적용
 
         holder.itemView.setOnClickListener{
-            mItemClickListener.onItemClick()
+            mItemClickListener.onItemClick(result.plantDtoList[position].plantPK)
         }
     }
 
@@ -54,7 +53,7 @@ class MyPlantRVAdapter(val context: Context, val result : plantDtoList): Recycle
 
     interface MyItemClickListener{
         //fun onRemoveSong(plantPK: Int)
-        fun onItemClick()
+        fun onItemClick(plantPK: String?)
     }
 
     private lateinit var mItemClickListener: MyItemClickListener
