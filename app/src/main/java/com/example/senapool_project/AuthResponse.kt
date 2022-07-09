@@ -113,7 +113,9 @@ data class DiaryFeedResponse(
 )
 
 data class Content(
-    @SerializedName("content") var content: ArrayList<Feed>
+    @SerializedName("content") var content: ArrayList<Feed>,
+    @SerializedName("last") var last:Boolean,
+    @SerializedName("totalElements") var totalElements: Int?=null,
 )
 
 data class Feed(

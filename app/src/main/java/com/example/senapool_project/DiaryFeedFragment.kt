@@ -28,15 +28,6 @@ class DiaryFeedFragment : Fragment() {
         binding = FragmentDiaryFeedBinding.inflate(inflater,container,false)
 
         token = arguments?.getString("token").toString()
-//        val feedRVAdapter = FeedRVAdapter(diaryDatas)
-//        binding.diaryFeedListRv.adapter=feedRVAdapter
-//        binding.diaryFeedListRv.layoutManager=LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
-//
-//        feedRVAdapter.setMyItemClickListener(object: FeedRVAdapter.MyItemClickListener{
-//            override fun onItemClick() {
-//                startActivity(Intent(activity,DiaryFeedDetailActivity::class.java))
-//            }
-//        })
 
         return binding.root
     }

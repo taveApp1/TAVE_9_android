@@ -14,6 +14,15 @@ import org.w3c.dom.Text
 
 class FeedRVAdapter(val context: Context, val result : ArrayList<Feed>): RecyclerView.Adapter<FeedRVAdapter.ViewHolder>() {
 
+    companion object {
+        private const val TYPE_POST = 0
+        private const val TYPE_LOADING = 1
+    }
+
+    private val posts = mutableListOf<Feed?>()
+
+
+
     //사용하고자 하는 아이템뷰 객체를 만들어야한다. 그리고 나서 만들어진 아이템뷰 객체를 재활용할 수 있도록 ViewHolder에게 던져줘야 한다.(-> return ViewHolder(binding))
     //얘는 재활용하기 때문에 처음 몇번만 호출되고 말음.
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): FeedRVAdapter.ViewHolder {
