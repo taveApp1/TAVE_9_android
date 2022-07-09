@@ -36,7 +36,7 @@ class DiaryRVAdapter(val context: Context, val result : diaryPrevListDto): Recyc
         }
         holder.title.text = result.diaryPrevDtoList[position].title // 제목 적용
         holder.date.text = result.diaryPrevDtoList[position].createdAt
-        holder.content.text = result.diaryPrevDtoList[position].title //content가 들어가야하는데 없어서 일단 title로 해놓음.
+        holder.content.text = result.diaryPrevDtoList[position].content
 
         holder.itemView.setOnClickListener{
             mItemClickListener.onItemClick(result.diaryPrevDtoList[position].diaryPK)

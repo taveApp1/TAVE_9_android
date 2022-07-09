@@ -41,18 +41,13 @@ class MyPlantDiaryListFragment : Fragment() {
 
 
 
-//        val diaryRVAdapter = DiaryRVAdapter(diaryDatas)
-//        binding.myPlantDiaryListRv.adapter=diaryRVAdapter
-//        binding.myPlantDiaryListRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-//
-//        diaryRVAdapter.setMyItemClickListener(object: DiaryRVAdapter.MyItemClickListener{
-//            override fun onItemClick() {
-//                startActivity(Intent(activity, MyPlantDiaryDetailActivity::class.java))
-//            }
-//        })
-
         binding.myPlantDiaryListNewDiaryWriteTv.setOnClickListener {
-            startActivity(Intent(activity, MyPlantDiaryWriteActivity::class.java))
+            val intent = Intent(activity,MyPlantDiaryWriteActivity::class.java)
+            intent.putExtra("userPK",userPK) //데이터 넣기
+            intent.putExtra("plantPK",plantPK) //데이터 넣기
+            intent.putExtra("token",token) //데이터 넣기
+            startActivity(intent)
+
         }
 
         return binding.root
@@ -92,19 +87,19 @@ class MyPlantDiaryListFragment : Fragment() {
 
                         binding.myPlantDiaryListRv.adapter = diaryRVAdapter
                         binding.myPlantDiaryListRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                        //check=2000
-                        //Log.d("MYPLANT/check",check.toString())
-                        //if (check==2000) {
+
                         Log.d("MYPLANT/check","실행된다")
                         diaryRVAdapter.setMyItemClickListener(object : DiaryRVAdapter.MyItemClickListener {
                                 override fun onItemClick(plantPK: String?) {
                                     diaryRVAdapter.setMyItemClickListener(object: DiaryRVAdapter.MyItemClickListener{
                                     override fun onItemClick(diaryPK:String?) {
-                                        startActivity(Intent(activity, MyPlantDiaryDetailActivity::class.java))
-                                        //나중에 여기에도 userPK,plantPK,token 넘겨줘야함
+                                        val intent = Intent(activity,MyPlantDiaryDetailActivity::class.java)
+                                        intent.putExtra("plantPK",plantPK) //데이터 넣기
+                                        intent.putExtra("token",token) //데이터 넣기
+                                        startActivity(intent)
                                     }
                                 })
-                            //    }
+
 
 
 

@@ -74,10 +74,33 @@ data class diaryPrevListDto(
 )
 
 data class DiaryList(
-    //아직 모름
+    @SerializedName("content") var content:String="",
     @SerializedName("title") var title:String="",
     @SerializedName("publish") var publish:Boolean,
     @SerializedName("image") var image:String="",
     @SerializedName("diaryPK") var diaryPK:String="",
-    @SerializedName("createdAt") var createdAt:String=""
+    @SerializedName("createdAt") var createdAt:String="",
+)
+
+
+data class MyPlantDiaryDetailResponse(
+    @SerializedName(value = "isSuccess") val isSuccess:Boolean,
+    @SerializedName(value = "code") val code:Int,
+    @SerializedName(value = "message") val message:String,
+    @SerializedName(value = "result") val result: plantDiaryInfoDto
+)
+
+data class plantDiaryInfoDto(
+    @SerializedName("plantDiaryInfoDto") var plantDiaryInfoDto:DiaryDetail
+)
+
+data class DiaryDetail(
+    @SerializedName("content") var content:String="",
+    @SerializedName("title") var title:String="",
+    @SerializedName("publish") var publish:Boolean,
+    @SerializedName("diaryImage") var image:String="",
+    @SerializedName("diaryPK") var diaryPK:String="",
+    @SerializedName("createdAt") var createdAt:String="",
+    @SerializedName("updatedAt") var updatedAt:String="",
+    @SerializedName("likesCount") var likesCount:Int?=null
 )

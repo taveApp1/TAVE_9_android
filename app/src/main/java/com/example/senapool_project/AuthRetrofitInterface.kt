@@ -40,4 +40,20 @@ interface AuthRetrofitInterface {
     fun MyPlantDiaryList(@Header("Authorization") token:String,
                          @Path("userPK") userPK:String,
                          @Path("plantPK") plantPK:String): Call<MyPlantDiaryListResponse>
+
+    @GET("/myplant-diary/{plantPK}")
+    fun MyPlantDiaryDetail(@Header("Authorization") token:String,
+                           @Path("plantPK") plantPK:String): Call<MyPlantDiaryDetailResponse>
+
+    @Multipart
+    @POST("/myplant-diary/{userPK}/{plantPK}")
+    fun DiaryEnroll(@Header("Authorization") token:String,
+                      @Path("userPK") userPK: String,
+                      @Path("plantPK") plantPK: String,
+                      @Query("content") content:String,
+                      @Query("createDate") createDate:String,
+                      @Query("publish") publish:Boolean,
+                      @Query("title") title:String,
+                      @Part file: MultipartBody.Part): Call<MyPlantEnrollResponse>
+
 }
