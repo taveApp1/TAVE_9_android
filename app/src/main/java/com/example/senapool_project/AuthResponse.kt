@@ -104,3 +104,27 @@ data class DiaryDetail(
     @SerializedName("updatedAt") var updatedAt:String="",
     @SerializedName("likesCount") var likesCount:Int?=null
 )
+
+data class DiaryFeedResponse(
+    @SerializedName(value = "isSuccess") val isSuccess:Boolean,
+    @SerializedName(value = "code") val code:Int,
+    @SerializedName(value = "message") val message:String,
+    @SerializedName(value = "result") val result: Content
+)
+
+data class Content(
+    @SerializedName("content") var content: ArrayList<Feed>
+)
+
+data class Feed(
+    @SerializedName("createdAt") var createdAt:String="",
+    @SerializedName("updatedAt") var updatedAt:String="",
+    @SerializedName("plantDiaryPK") var plantDiaryPK:String="",
+    @SerializedName("title") var title:String="",
+    @SerializedName("content") var content:String="",
+    @SerializedName("diaryImage") var diaryImage:String="",
+    @SerializedName("publish") var publish:Boolean,
+    @SerializedName("likesCount") var likesCount:Int?=null,
+    @SerializedName("likesState") var likesState:Boolean,
+    @SerializedName("diaryImageUrl") var diaryImageUrl:String=""
+)
