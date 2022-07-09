@@ -56,4 +56,8 @@ interface AuthRetrofitInterface {
                       @Query("title") title:String,
                       @Part file: MultipartBody.Part): Call<MyPlantEnrollResponse>
 
+    @GET("/plant-diary")
+    fun DiaryFeed(@Header("Authorization") token:String,
+                  @Query("page") num: Char
+    ): Call<DiaryFeedResponse>
 }

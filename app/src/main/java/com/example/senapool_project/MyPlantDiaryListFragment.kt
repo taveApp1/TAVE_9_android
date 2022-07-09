@@ -19,7 +19,6 @@ import retrofit2.Response
 
 class MyPlantDiaryListFragment : Fragment() {
 
-    private lateinit var callback: OnBackPressedCallback
     lateinit var binding: FragmentMyPlantDiaryListBinding
     lateinit var diaryRVAdapter: DiaryRVAdapter
 
@@ -90,17 +89,11 @@ class MyPlantDiaryListFragment : Fragment() {
 
                         Log.d("MYPLANT/check","실행된다")
                         diaryRVAdapter.setMyItemClickListener(object : DiaryRVAdapter.MyItemClickListener {
-                                override fun onItemClick(plantPK: String?) {
-                                    diaryRVAdapter.setMyItemClickListener(object: DiaryRVAdapter.MyItemClickListener{
-                                    override fun onItemClick(diaryPK:String?) {
+                                override fun onItemClick(diaryPK: String?) {
                                         val intent = Intent(activity,MyPlantDiaryDetailActivity::class.java)
-                                        intent.putExtra("plantPK",plantPK) //데이터 넣기
+                                        intent.putExtra("diaryPK",diaryPK) //데이터 넣기
                                         intent.putExtra("token",token) //데이터 넣기
                                         startActivity(intent)
-                                    }
-                                })
-
-
 
 
 //            override fun onRemoveSong(plantPK: Int) {

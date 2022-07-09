@@ -13,7 +13,7 @@ import retrofit2.Response
 class MyPlantDiaryDetailActivity : AppCompatActivity(){
 
     lateinit var binding: ActivityMyPlantDiaryDetailBinding
-    lateinit var plantPK:String
+    lateinit var diaryPK:String
     lateinit var token:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,9 +21,9 @@ class MyPlantDiaryDetailActivity : AppCompatActivity(){
         binding = ActivityMyPlantDiaryDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        plantPK = intent.getStringExtra("plantPK").toString()
+        diaryPK = intent.getStringExtra("diaryPK").toString()
         token = intent.getStringExtra("token").toString()
-        Log.d("DIARYDETIAL/create",plantPK)
+        Log.d("DIARYDETIAL/create",diaryPK)
 
         binding.myPlantDiaryDetailContentTv.movementMethod = ScrollingMovementMethod.getInstance()
 
@@ -33,14 +33,14 @@ class MyPlantDiaryDetailActivity : AppCompatActivity(){
 
     override fun onStart() {
         super.onStart()
-        Log.d("DIARYDETIAL/start",plantPK)
-        getDiary(plantPK)
+        Log.d("DIARYDETIAL/start",diaryPK)
+        getDiary(diaryPK)
 
     }
 
-    fun getDiary(plantPK:String){
+    fun getDiary(diaryPK:String){
         val authService = getRetrofit().create(AuthRetrofitInterface::class.java)
-        authService.MyPlantDiaryDetail("Bearer "+token,plantPK).enqueue(object :
+        authService.MyPlantDiaryDetail("Bearer "+token,diaryPK).enqueue(object :
             Callback<MyPlantDiaryDetailResponse> {
 
             //응답이 왔을 때 처리하는 부분

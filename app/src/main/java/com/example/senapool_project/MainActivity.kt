@@ -59,7 +59,13 @@ class MainActivity : AppCompatActivity(){
                     return@setOnItemSelectedListener true
                 }
                 R.id.page_diary_feed -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.main_frm, DiaryFeedFragment()).commitAllowingStateLoss()
+                    val FeedFragment = DiaryFeedFragment()
+                    var bundle = Bundle()
+                    bundle.putString("token",token)
+
+                    FeedFragment.arguments = bundle
+
+                    supportFragmentManager.beginTransaction().replace(R.id.main_frm, FeedFragment).commitAllowingStateLoss()
                     return@setOnItemSelectedListener true
                 }
                 R.id.page_setting -> {
