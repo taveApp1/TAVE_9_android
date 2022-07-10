@@ -21,4 +21,13 @@ interface AuthRetrofitInterface {
 
     @POST("/user/login")
     fun login(@Body login:Login): Call<LoginResponse>
+
+    /*@PATCH("/user/temPassword")
+    Call <
+    fun passwordEmailSend(@Body code: VerifySendEmail) : Call<VerifySendResponse>
+
+    @PATCH("/user/temPassword")
+    fun passwordEmailSend
+    @PATCH("/posts/1")
+    (@Field("title") String title);*/
 }
