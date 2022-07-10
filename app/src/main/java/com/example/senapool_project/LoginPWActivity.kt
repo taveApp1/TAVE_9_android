@@ -4,11 +4,18 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.util.Log
+import android.view.View
+import android.widget.Toast
 import com.example.senapool_project.databinding.ActivityLoginEmailBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LoginPWActivity :AppCompatActivity(){
 
     lateinit var binding: ActivityLoginEmailBinding
+    /*lateinit var verifyEmailPasswordSend: Int =0*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,5 +27,6 @@ class LoginPWActivity :AppCompatActivity(){
             val intent=Intent(this,LoginMainActivity::class.java)
             startActivity(intent)
         }
+
     }
 }
