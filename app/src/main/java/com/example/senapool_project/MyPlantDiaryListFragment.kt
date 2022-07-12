@@ -91,6 +91,7 @@ class MyPlantDiaryListFragment : Fragment() {
                         diaryRVAdapter.setMyItemClickListener(object : DiaryRVAdapter.MyItemClickListener {
                                 override fun onItemClick(diaryPK: String?) {
                                         val intent = Intent(activity,MyPlantDiaryDetailActivity::class.java)
+                                        intent.putExtra("userPK",userPK)
                                         intent.putExtra("diaryPK",diaryPK) //데이터 넣기
                                         intent.putExtra("token",token) //데이터 넣기
                                         startActivity(intent)

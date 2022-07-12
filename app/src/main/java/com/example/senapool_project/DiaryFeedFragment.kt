@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.senapool_project.databinding.FragmentDiaryFeedBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -36,6 +37,20 @@ class DiaryFeedFragment : Fragment() {
         super.onStart()
 
         getFeed()
+
+        binding.diaryFeedListRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val lastVisibleItemPosition = (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition() // 화면에 보이는 마지막 아이템의 position
+                val itemTotalCount = recyclerView.adapter!!.itemCount - 1 // 어댑터에 등록된 아이템의 총 개수 -1
+                Log.d("Scroll",lastVisibleItemPosition.toString())
+                // 스크롤이 끝에 도달했는지 확인
+                if (lastVisibleItemPosition == itemTotalCount) {
+
+                }
+            }
+        })
     }
 
     private fun initRecyclerView(result: ArrayList<Feed>) {
@@ -46,7 +61,7 @@ class DiaryFeedFragment : Fragment() {
 
     fun getFeed(){
         val authService = getRetrofit().create(AuthRetrofitInterface::class.java)
-        authService.DiaryFeed("Bearer "+token,'0').enqueue(object :
+        authService.DiaryFeed("Bearer "+token).enqueue(object :
             Callback<DiaryFeedResponse> {
 
             //응답이 왔을 때 처리하는 부분

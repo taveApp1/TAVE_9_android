@@ -100,8 +100,7 @@ data class DiaryDetail(
     @SerializedName("publish") var publish:Boolean,
     @SerializedName("diaryImage") var image:String="",
     @SerializedName("diaryPK") var diaryPK:String="",
-    @SerializedName("createdAt") var createdAt:String="",
-    @SerializedName("updatedAt") var updatedAt:String="",
+    @SerializedName("createDate") var createdAt:String="",
     @SerializedName("likesCount") var likesCount:Int?=null
 )
 
@@ -114,13 +113,10 @@ data class DiaryFeedResponse(
 
 data class Content(
     @SerializedName("content") var content: ArrayList<Feed>,
-    @SerializedName("last") var last:Boolean,
-    @SerializedName("totalElements") var totalElements: Int?=null,
 )
 
 data class Feed(
-    @SerializedName("createdAt") var createdAt:String="",
-    @SerializedName("updatedAt") var updatedAt:String="",
+    @SerializedName("createDate") var createdAt:String="",
     @SerializedName("plantDiaryPK") var plantDiaryPK:String="",
     @SerializedName("title") var title:String="",
     @SerializedName("content") var content:String="",
@@ -128,5 +124,14 @@ data class Feed(
     @SerializedName("publish") var publish:Boolean,
     @SerializedName("likesCount") var likesCount:Int?=null,
     @SerializedName("likesState") var likesState:Boolean,
-    @SerializedName("diaryImageUrl") var diaryImageUrl:String=""
+    @SerializedName("diaryImageUrl") var diaryImageUrl:String="",
+    @SerializedName("userID") var userID:String="",
+    @SerializedName("userImage") var userImage:String=""
 )
+
+data class MyPlantDeleteResponse(
+    @SerializedName(value = "isSuccess") val isSuccess:Boolean,
+    @SerializedName(value = "code") val code:Int,
+    @SerializedName(value = "message") val message:String,
+)
+

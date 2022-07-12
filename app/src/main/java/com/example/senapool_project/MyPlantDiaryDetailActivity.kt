@@ -13,6 +13,7 @@ import retrofit2.Response
 class MyPlantDiaryDetailActivity : AppCompatActivity(){
 
     lateinit var binding: ActivityMyPlantDiaryDetailBinding
+    lateinit var userPK:String
     lateinit var diaryPK:String
     lateinit var token:String
 
@@ -21,6 +22,7 @@ class MyPlantDiaryDetailActivity : AppCompatActivity(){
         binding = ActivityMyPlantDiaryDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        userPK = intent.getStringExtra("userPK").toString()
         diaryPK = intent.getStringExtra("diaryPK").toString()
         token = intent.getStringExtra("token").toString()
         Log.d("DIARYDETIAL/create",diaryPK)
@@ -28,6 +30,25 @@ class MyPlantDiaryDetailActivity : AppCompatActivity(){
         binding.myPlantDiaryDetailContentTv.movementMethod = ScrollingMovementMethod.getInstance()
 
         binding.myPlantDiaryDetailArrowIv.setOnClickListener { finish() }
+
+        var likes: Boolean = false
+        binding.myPlantDiaryDetailHeartIv.setOnClickListener {
+            if (!likes) {
+                binding.myPlantDiaryDetailHeartIv.setImageResource(R.drawable.heart)
+
+            } else {
+                binding.myPlantDiaryDetailHeartIv.setImageResource(R.drawable.empty_heart)
+            }
+            likes = !likes
+        }
+
+        binding.myPlantDiaryDetailDeleteBtn.setOnClickListener {
+            getDelete()
+        }
+
+        binding.myPlantDiaryDetailModifyBtn.setOnClickListener {
+
+        }
 
     }
 
@@ -76,5 +97,37 @@ class MyPlantDiaryDetailActivity : AppCompatActivity(){
         //비동기작업이니까 함수가 잘 실행되었는지 확인차 찍어보기
         Log.d("DIARYDETAIL", "HELLO")
 
+    }
+
+    fun getDelete(){
+        val authService = getRetrofit().create(AuthRetrofitInterface::class.java)
+        authService.DiaryDelete("Bearer "+token,userPK,diaryPK).enqueue(object :
+            Callback<MyPlantDeleteResponse> {
+
+            //응답이 왔을 때 처리하는 부분
+            override fun onResponse(call: Call<MyPlantDeleteResponse>, response: Response<MyPlantDeleteResponse>) {
+                //response의 body안에 서버 개발자가 만든게 들어있음
+                Log.d("DELETE/SUCCESS", response.toString())
+                val resp: MyPlantDeleteResponse = response.body()!!
+                Log.d("DELETE/SUCCESS", resp.toString())
+                when(resp.code){
+                    2000->{
+                        finish()
+                    }
+
+
+                    else->{
+                        //Toast.makeText(this@MyPlantFragment,resp.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+
+            //네트워크 연결자체가 실패했을 때 실행하는 부분
+            override fun onFailure(call: Call<MyPlantDeleteResponse>, t: Throwable) {
+                Log.d("DELETE/FAILURE", t.message.toString())
+            }
+        })
+        //비동기작업이니까 함수가 잘 실행되었는지 확인차 찍어보기
+        Log.d("DELETE", "HELLO")
     }
 }
