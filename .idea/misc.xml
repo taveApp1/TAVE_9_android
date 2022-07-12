@@ -33,8 +33,10 @@
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="app/src/main/res/font/font_regular.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_intro.xml" value="0.2520833333333333" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_login_email.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_login_singnup.xml" value="0.3192771084337349" />
+        <entry key="app/src/main/res/layout/activity_quit_check.xml" value="0.2520833333333333" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.151" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_default.xml" value="0.1275" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1275" />

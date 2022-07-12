@@ -32,7 +32,7 @@ class SettingFragment : Fragment() {
 
         /*회원탈퇴 버튼 클릭  ->  수정 필요*/
         binding.quitBtn.setOnClickListener {
-            startActivity(Intent(activity, SettingEditMemberInfo::class.java))
+            startActivity(Intent(activity, QuitActivity::class.java))
         }
 
 

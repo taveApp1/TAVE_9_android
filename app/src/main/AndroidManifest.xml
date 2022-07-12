@@ -29,6 +29,7 @@
         <activity android:name=".MyPlantDiaryDetailActivity"></activity>
         <activity android:name=".MyPlantEnrollActivity"></activity>
         <activity android:name=".LoginMainActivity"></activity>
+        <activity android:name=".QuitActivity"></activity>
         <activity
             android:name=".MyPlantDiaryWriteActivity"
             android:windowSoftInputMode="adjustPan"></activity>
