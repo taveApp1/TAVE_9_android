@@ -74,15 +74,17 @@ class SettingFragment : Fragment() {
         }
 
         fun getPassword(): Password{
-            val password=mDialogView.findViewById<EditText>(R.id.withdrawal_password_et).text
-
-            return Password(password.toString())
+            val password: String=mDialogView.findViewById<EditText>(R.id.withdrawal_password_et).text.toString()
+            Log.d("Password",password+token)
+            return Password(password)
         }
 
         val yesButton = mDialogView.findViewById<TextView>(R.id.withdrawal_yes_tv)
         yesButton.setOnClickListener {
             val authService = getRetrofit().create(AuthRetrofitInterface::class.java)
-            authService.Quit("Bearer "+token,getPassword()).enqueue(object :
+            authService.Quit("Bearer "+token,
+                Password(mDialogView.findViewById<EditText>(R.id.withdrawal_password_et).text.toString())
+            ).enqueue(object :
                 Callback<QuitResponse> {
 
                 //응답이 왔을 때 처리하는 부분
@@ -105,7 +107,7 @@ class SettingFragment : Fragment() {
                                 mAlertDialog2.dismiss()
                                 mAlertDialog.dismiss()
                                 startActivity(Intent(activity, LoginMainActivity::class.java))
-                            }, 1000) // 0.6초 정도 딜레이를 준 후 시작
+                            }, 2000) // 0.6초 정도 딜레이를 준 후 시작
 
 
                         }

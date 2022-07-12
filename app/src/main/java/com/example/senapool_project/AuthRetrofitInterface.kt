@@ -42,8 +42,9 @@ interface AuthRetrofitInterface {
                          @Path("userPK") userPK:String,
                          @Path("plantPK") plantPK:String): Call<MyPlantDiaryListResponse>
 
-    @GET("/myplant-diary/{plantPK}")
+    @GET("/myplant-diary/{userPK}/{plantPK}")
     fun MyPlantDiaryDetail(@Header("Authorization") token:String,
+                           @Path("userPK") userPK:String,
                            @Path("plantPK") plantPK:String): Call<MyPlantDiaryDetailResponse>
 
     @Multipart
@@ -58,7 +59,6 @@ interface AuthRetrofitInterface {
                       @Part file: MultipartBody.Part?): Call<MyPlantEnrollResponse>
 
     @GET("/plant-diary")
-
     fun DiaryFeed(@Header("Authorization") token:String): Call<DiaryFeedResponse>
 
     @DELETE("/myplant-list/{userPK}/{plantPK}")
@@ -79,7 +79,8 @@ interface AuthRetrofitInterface {
     fun Unlike(@Header("Authorization") token:String,
              @Path("diaryPK") plantPK: String): Call<LikeResponse>
 
-    @DELETE("/user/delete")
+    //@DELETE("/user/delete")
+    @HTTP(method = "DELETE", path = "/user/delete", hasBody = true)
     fun Quit(@Header("Authorization") token:String,
              @Body password: Password): Call<QuitResponse>
 

@@ -42,6 +42,6 @@ data class MyPlantList(
 )
 
 data class Password(
-    @SerializedName("password") var password: String?
+    @SerializedName("password") var password: String?=""
 )
 

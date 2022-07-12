@@ -16,6 +16,7 @@ class MyPlantDiaryDetailActivity : AppCompatActivity(){
     lateinit var userPK:String
     lateinit var diaryPK:String
     lateinit var token:String
+    var likes:Boolean=false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,9 +32,9 @@ class MyPlantDiaryDetailActivity : AppCompatActivity(){
 
         binding.myPlantDiaryDetailArrowIv.setOnClickListener { finish() }
 
-        var likes: Boolean = false
+
         binding.myPlantDiaryDetailHeartIv.setOnClickListener {
-            if (!likes) {
+            if (likes==false) {
                 binding.myPlantDiaryDetailHeartIv.setImageResource(R.drawable.heart)
                 getLike()
 
@@ -63,7 +64,7 @@ class MyPlantDiaryDetailActivity : AppCompatActivity(){
 
     fun getDiary(diaryPK:String){
         val authService = getRetrofit().create(AuthRetrofitInterface::class.java)
-        authService.MyPlantDiaryDetail("Bearer "+token,diaryPK).enqueue(object :
+        authService.MyPlantDiaryDetail("Bearer "+token,userPK,diaryPK).enqueue(object :
             Callback<MyPlantDiaryDetailResponse> {
 
             //응답이 왔을 때 처리하는 부분
@@ -79,7 +80,14 @@ class MyPlantDiaryDetailActivity : AppCompatActivity(){
                         binding.myPlantDiaryDetailContentTv.text=resp.result.plantDiaryInfoDto.content
                         binding.myPlantDiaryDetailDateTv.text=resp.result.plantDiaryInfoDto.createdAt
                         binding.myPlantDiaryDetailHeartCountTv.text=resp.result.plantDiaryInfoDto.likesCount.toString()
-                        //공개여부 수정하기
+
+                        if (resp.result.plantDiaryInfoDto.likesState==true){
+                            binding.myPlantDiaryDetailHeartIv.setImageResource(R.drawable.heart)
+                            likes=true
+                        }else{
+                            binding.myPlantDiaryDetailHeartIv.setImageResource(R.drawable.empty_heart)
+                            likes=true
+                        }
 
 
                     }

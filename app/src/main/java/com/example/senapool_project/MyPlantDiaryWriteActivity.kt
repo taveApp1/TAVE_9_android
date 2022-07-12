@@ -27,7 +27,7 @@ import java.security.AccessController.getContext
 class MyPlantDiaryWriteActivity : AppCompatActivity(){
 
     lateinit var binding: ActivityMyPlantDiaryWriteBinding
-    var diarybitmap:Bitmap = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.diary_image_example);
+    //var diarybitmap:Bitmap = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.diary_image_example);
 
 
     var file: File = File("drawable/diary_image_example.jpg")

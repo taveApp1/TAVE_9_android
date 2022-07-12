@@ -64,6 +64,7 @@ class MainActivity : AppCompatActivity(){
                     val FeedFragment = DiaryFeedFragment()
                     var bundle = Bundle()
                     bundle.putString("token",token)
+                    bundle.putString("userPK",userPK)
 
                     FeedFragment.arguments = bundle
 

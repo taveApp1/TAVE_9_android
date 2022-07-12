@@ -66,7 +66,8 @@ data class plantInfoDto(
     @SerializedName("plantName") var plantName: String?="",
     @SerializedName("plantType") var plantType: String?="",
     @SerializedName("waterPeriod") var waterPeriod: Int?=null,
-    @SerializedName("period") var period: Int?=null
+    @SerializedName("period") var period: Int?=null,
+    @SerializedName("lastWater") var lastWater: String=""
 )
 
 data class diaryPrevListDto(
@@ -101,7 +102,8 @@ data class DiaryDetail(
     @SerializedName("diaryImage") var image:String="",
     @SerializedName("diaryPK") var diaryPK:String="",
     @SerializedName("createDate") var createdAt:String="",
-    @SerializedName("likesCount") var likesCount:Int?=null
+    @SerializedName("likesCount") var likesCount:Int?=null,
+    @SerializedName("likesState") var likesState:Boolean=false
 )
 
 data class DiaryFeedResponse(
