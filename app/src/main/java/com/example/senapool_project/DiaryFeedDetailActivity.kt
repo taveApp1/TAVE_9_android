@@ -14,13 +14,16 @@ class DiaryFeedDetailActivity : AppCompatActivity(){
 
     lateinit var binding: ActivityDiaryFeedDetailBinding
     lateinit var diaryPK:String
+    lateinit var userPK:String
     lateinit var token:String
+    var likes: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDiaryFeedDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        userPK = intent.getStringExtra("userPK").toString()
         diaryPK = intent.getStringExtra("plantDiaryPK").toString()
         token = intent.getStringExtra("token").toString()
         Log.d("DIARYDETIAL/create",diaryPK)
@@ -29,9 +32,8 @@ class DiaryFeedDetailActivity : AppCompatActivity(){
 
         binding.diaryFeedDetailArrowIv.setOnClickListener { finish() }
 
-        var likes: Boolean = false
         binding.diaryFeedDetailHeartIv.setOnClickListener {
-            if (!likes) {
+            if (likes==false) {
                 binding.diaryFeedDetailHeartIv.setImageResource(R.drawable.heart)
                 getLike()
 
@@ -52,7 +54,7 @@ class DiaryFeedDetailActivity : AppCompatActivity(){
 
     fun getDiary(diaryPK:String){
         val authService = getRetrofit().create(AuthRetrofitInterface::class.java)
-        authService.MyPlantDiaryDetail("Bearer "+token,diaryPK).enqueue(object :
+        authService.MyPlantDiaryDetail("Bearer "+token,userPK,diaryPK).enqueue(object :
             Callback<MyPlantDiaryDetailResponse> {
 
             //응답이 왔을 때 처리하는 부분
@@ -69,6 +71,14 @@ class DiaryFeedDetailActivity : AppCompatActivity(){
                         binding.diaryFeedDetailDateTv.text=resp.result.plantDiaryInfoDto.createdAt
                         binding.diaryFeedDetailHeartCountTv.text=resp.result.plantDiaryInfoDto.likesCount.toString()
                         //공개여부 수정하기
+
+                        if (resp.result.plantDiaryInfoDto.likesState==true){
+                            binding.diaryFeedDetailHeartIv.setImageResource(R.drawable.heart)
+                            likes=true
+                        }else{
+                            binding.diaryFeedDetailHeartIv.setImageResource(R.drawable.empty_heart)
+                            likes=true
+                        }
 
 
                     }

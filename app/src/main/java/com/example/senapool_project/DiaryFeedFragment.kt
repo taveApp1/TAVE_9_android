@@ -20,6 +20,7 @@ class DiaryFeedFragment : Fragment() {
     lateinit var feedRVAdapter: FeedRVAdapter
 
     lateinit var token:String
+    lateinit var userPK:String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,6 +30,7 @@ class DiaryFeedFragment : Fragment() {
         binding = FragmentDiaryFeedBinding.inflate(inflater,container,false)
 
         token = arguments?.getString("token").toString()
+        userPK = arguments?.getString("userPK").toString()
 
         return binding.root
     }
@@ -82,6 +84,7 @@ class DiaryFeedFragment : Fragment() {
                             override fun onItemClick(plantDiaryPK: String?) {
                                 val intent = Intent(activity,DiaryFeedDetailActivity::class.java)
                                 intent.putExtra("plantDiaryPK",plantDiaryPK) //데이터 넣기
+                                intent.putExtra("userPK",userPK) //데이터 넣기
                                 intent.putExtra("token",token) //데이터 넣기
                                 startActivity(intent)
 
