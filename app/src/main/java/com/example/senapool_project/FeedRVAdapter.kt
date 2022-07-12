@@ -14,15 +14,6 @@ import org.w3c.dom.Text
 
 class FeedRVAdapter(val context: Context, val result : ArrayList<Feed>): RecyclerView.Adapter<FeedRVAdapter.ViewHolder>() {
 
-    companion object {
-        private const val TYPE_POST = 0
-        private const val TYPE_LOADING = 1
-    }
-
-    private val posts = mutableListOf<Feed?>()
-
-
-
     //사용하고자 하는 아이템뷰 객체를 만들어야한다. 그리고 나서 만들어진 아이템뷰 객체를 재활용할 수 있도록 ViewHolder에게 던져줘야 한다.(-> return ViewHolder(binding))
     //얘는 재활용하기 때문에 처음 몇번만 호출되고 말음.
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): FeedRVAdapter.ViewHolder {
@@ -41,18 +32,19 @@ class FeedRVAdapter(val context: Context, val result : ArrayList<Feed>): Recycle
         } else {
             Log.d("image",result[position].diaryImageUrl )
             Glide.with(context).load(result[position].diaryImageUrl).into(holder.diaryImage) //적용시키는 방법
-            //Glide.with(context).load(result.content[position].유저사진).into(holder.userImage) 유저사진 추가되면
+            Glide.with(context).load(result[position].userImage).into(holder.userImage)
         }
         holder.title.text = result[position].title // 제목 적용
-        holder.date.text = result[position].createdAt.substring(0,10)
+        holder.date.text = result[position].createdAt
         holder.content.text = result[position].content
         holder.likes.text = result[position].likesCount.toString()
-        //holder.userName.text = result.content[position].유저이름   유저 추가되면!
+        holder.userName.text = result[position].userID
 
         holder.itemView.setOnClickListener{
             mItemClickListener.onItemClick(result[position].plantDiaryPK)
         }
     }
+
 
     //데이터셋의 크기를 알려주는 함수
 
@@ -79,4 +71,5 @@ class FeedRVAdapter(val context: Context, val result : ArrayList<Feed>): Recycle
     fun setMyItemClickListener(itemClickListener: MyItemClickListener){
         mItemClickListener = itemClickListener
     }
+
 }

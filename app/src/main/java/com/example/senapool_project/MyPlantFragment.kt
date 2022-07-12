@@ -1,11 +1,16 @@
 package com.example.senapool_project
 
+import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
@@ -90,6 +95,66 @@ class MyPlantFragment : Fragment() {
                         if (check==2000) {
                             Log.d("MYPLANT/check","실행된다")
                             myplantRVAdapter.setMyItemClickListener(object : MyPlantRVAdapter.MyItemClickListener {
+                                override fun onItemLongClick(plantPK: String?) {
+//                                    Log.d("longclick",plantPK.toString())
+//                                    val intent = Intent(activity,DialogMyPlantWateringActivity::class.java)
+//                                    intent.putExtra("plantPK",plantPK) //데이터 넣기
+//                                    intent.putExtra("userPK",userPK) //데이터 넣기
+//                                    intent.putExtra("token",token) //데이터 넣기
+//                                    startActivity(intent)
+
+                                    // Dialog만들기
+                                    val mDialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_my_plant_watering, null)
+                                    val mBuilder = AlertDialog.Builder(activity)
+                                        .setView(mDialogView)
+
+                                    val  mAlertDialog = mBuilder.show()
+
+                                    val modifyButton = mDialogView.findViewById<TextView>(R.id.my_plant_popup_modify_tv)
+                                    modifyButton.setOnClickListener {
+                                        mAlertDialog.dismiss()
+
+//                                        val intent = Intent(activity,::class.java)
+//                                        intent.putExtra("plantPK",plantPK) //데이터 넣기
+//                                        intent.putExtra("userPK",userPK) //데이터 넣기
+//                                        intent.putExtra("token",token) //데이터 넣기
+//                                        startActivity(intent)
+
+                                    }
+
+                                    val deleteButton = mDialogView.findViewById<TextView>(R.id.my_plant_popup_delete_tv)
+                                    deleteButton.setOnClickListener {
+                                        val authService = getRetrofit().create(AuthRetrofitInterface::class.java)
+                                        authService.MyPlantDelete("Bearer "+token,userPK,plantPK!!).enqueue(object : Callback<MyPlantDeleteResponse> {
+
+                                            //응답이 왔을 때 처리하는 부분
+                                            override fun onResponse(call: Call<MyPlantDeleteResponse>, response: Response<MyPlantDeleteResponse>) {
+                                                //response의 body안에 서버 개발자가 만든게 들어있음
+                                                val resp: MyPlantDeleteResponse = response.body()!!
+                                                Log.d("DELETE/SUCCESS", resp.toString())
+                                                when(resp.code){
+                                                    2000->{
+                                                        Log.d("DELETE/SUCCESS", resp.message)
+                                                        getPlant(userPK)
+                                                        mAlertDialog.dismiss()
+                                                    }
+                                                    else->{
+
+                                                    }
+                                                }
+                                            }
+
+                                            //네트워크 연결자체가 실패했을 때 실행하는 부분
+                                            override fun onFailure(call: Call<MyPlantDeleteResponse>, t: Throwable) {
+                                                Log.d("DELETE/FAILURE", t.message.toString())
+                                            }
+                                        })
+
+                                    }
+
+
+                                }
+
                                 override fun onItemClick(plantPK: String?) {
                                     var myplantdiarylistfragment = MyPlantDiaryListFragment()
                                     var bundle = Bundle()
@@ -106,10 +171,13 @@ class MyPlantFragment : Fragment() {
 
 
 
+
 //            override fun onRemoveSong(plantPK: Int) {
 //                TODO("Not yet implemented")
 //            }
                             })
+
+
                         }
 
                     }

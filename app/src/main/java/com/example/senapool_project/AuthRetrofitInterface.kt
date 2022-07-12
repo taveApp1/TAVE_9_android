@@ -55,11 +55,20 @@ interface AuthRetrofitInterface {
                       @Query("createDate") createDate:String,
                       @Query("publish") publish:Boolean,
                       @Query("title") title:String,
-                      @Part file: MultipartBody.Part): Call<MyPlantEnrollResponse>
+                      @Part file: MultipartBody.Part?): Call<MyPlantEnrollResponse>
 
     @GET("/plant-diary")
-    fun DiaryFeed(@Header("Authorization") token:String,
-                  @Query("page") num: Char
-    ): Call<DiaryFeedResponse>
+
+    fun DiaryFeed(@Header("Authorization") token:String): Call<DiaryFeedResponse>
+
+    @DELETE("/myplant-list/{userPK}/{plantPK}")
+    fun MyPlantDelete(@Header("Authorization") token:String,
+                    @Path("userPK") userPK: String,
+                    @Path("plantPK") plantPK: String): Call<MyPlantDeleteResponse>
+
+    @DELETE("/myplant-diary/{userPK}/{diaryPK}")
+    fun DiaryDelete(@Header("Authorization") token:String,
+                      @Path("userPK") userPK: String,
+                      @Path("diaryPK") plantPK: String): Call<MyPlantDeleteResponse>
 
 }

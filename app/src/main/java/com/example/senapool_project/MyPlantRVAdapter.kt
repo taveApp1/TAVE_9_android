@@ -37,6 +37,12 @@ class MyPlantRVAdapter(val context: Context, val result : plantDtoList): Recycle
         holder.itemView.setOnClickListener{
             mItemClickListener.onItemClick(result.plantDtoList[position].plantPK)
         }
+
+        holder.itemView.setOnLongClickListener {
+            mItemClickListener.onItemLongClick(result.plantDtoList[position].plantPK)
+            Log.d("longclick", true.toString())
+            return@setOnLongClickListener true
+        }
     }
 
     //데이터셋의 크기를 알려주는 함수
@@ -54,6 +60,7 @@ class MyPlantRVAdapter(val context: Context, val result : plantDtoList): Recycle
     interface MyItemClickListener{
         //fun onRemoveSong(plantPK: Int)
         fun onItemClick(plantPK: String?)
+        fun onItemLongClick(plantPK: String?)
     }
 
     private lateinit var mItemClickListener: MyItemClickListener
@@ -62,4 +69,8 @@ class MyPlantRVAdapter(val context: Context, val result : plantDtoList): Recycle
     }
 
 
+
 }
+
+
+

@@ -33,6 +33,7 @@
             android:name=".MyPlantDiaryWriteActivity"
             android:windowSoftInputMode="adjustPan"></activity>
         <activity android:name=".DiaryFeedDetailActivity"></activity>
+        <activity android:name=".DialogMyPlantWateringActivity"></activity>
 
 
     </application>
