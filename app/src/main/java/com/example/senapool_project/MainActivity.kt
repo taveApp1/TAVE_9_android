@@ -17,11 +17,13 @@ class MainActivity : AppCompatActivity(){
 
         val token = intent.getStringExtra("token")
         val userPK = intent.getStringExtra("userPK")
+        val userId = intent.getStringExtra("userId")
+        val userImg = intent.getStringExtra("userImg")
 
         Log.d("MAIN/INTENT",token+' '+userPK)
 
 
-        initBottomNavigation(userPK.toString(),token.toString())
+        initBottomNavigation(userPK.toString(),token.toString(),userId.toString(),userImg.toString())
 
 //        var fragment2 = MyPlantFragment()
 //        var bundle = Bundle()
@@ -34,7 +36,7 @@ class MainActivity : AppCompatActivity(){
 //            .commit()
     }
 
-    private fun initBottomNavigation(userPK:String,token:String) {
+    private fun initBottomNavigation(userPK:String,token:String,userId:String,userImg:String) {
 
         val plantFragment = MyPlantFragment()
         var bundle = Bundle()
@@ -69,7 +71,15 @@ class MainActivity : AppCompatActivity(){
                     return@setOnItemSelectedListener true
                 }
                 R.id.page_setting -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.main_frm, SettingFragment()).commitAllowingStateLoss()
+                    val SettingFragment = SettingFragment()
+                    var bundle = Bundle()
+                    bundle.putString("userId",userId)
+                    bundle.putString("userImg",userImg)
+                    bundle.putString("token",token)
+
+                    SettingFragment.arguments = bundle
+
+                    supportFragmentManager.beginTransaction().replace(R.id.main_frm, SettingFragment).commitAllowingStateLoss()
                     return@setOnItemSelectedListener true
                 }
             }

@@ -76,6 +76,8 @@ class LoginMainActivity :AppCompatActivity(){
 
                         intent1.putExtra("token",resp.result.token)
                         intent1.putExtra("userPK",resp.result.userPk)
+                        intent1.putExtra("userId",resp.result.userId)
+                        intent1.putExtra("userImg",resp.result.userImageUrl)
 
                         startActivity(intent1)
                     }

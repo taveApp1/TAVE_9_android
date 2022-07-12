@@ -43,6 +43,11 @@ class FeedRVAdapter(val context: Context, val result : ArrayList<Feed>): Recycle
         holder.itemView.setOnClickListener{
             mItemClickListener.onItemClick(result[position].plantDiaryPK)
         }
+        if (result[position].likesState==true){
+            holder.likeImg.setImageResource(R.drawable.heart)
+        }else{
+            holder.likeImg.setImageResource(R.drawable.empty_heart)
+        }
     }
 
 
@@ -60,6 +65,8 @@ class FeedRVAdapter(val context: Context, val result : ArrayList<Feed>): Recycle
         val diaryImage: ImageView = binding.itemDiaryFeedImgIv
         val likes: TextView = binding.itemDiaryFeedHeartCountTv
         val userImage: ImageView = binding.itemDiaryFeedUserIv
+        val likeImg: ImageView = binding.itemDiaryFeedHeartIv
+
     }
 
     interface MyItemClickListener{
@@ -71,5 +78,7 @@ class FeedRVAdapter(val context: Context, val result : ArrayList<Feed>): Recycle
     fun setMyItemClickListener(itemClickListener: MyItemClickListener){
         mItemClickListener = itemClickListener
     }
+
+
 
 }

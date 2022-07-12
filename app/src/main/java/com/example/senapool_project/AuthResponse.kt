@@ -135,3 +135,17 @@ data class MyPlantDeleteResponse(
     @SerializedName(value = "message") val message:String,
 )
 
+data class LikeResponse(
+    @SerializedName(value = "isSuccess") val isSuccess:Boolean,
+    @SerializedName(value = "code") val code:Int,
+    @SerializedName(value = "message") val message:String,
+    @SerializedName(value = "result") val result:String,
+)
+
+data class QuitResponse(
+    @SerializedName(value = "isSuccess") val isSuccess:Boolean,
+    @SerializedName(value = "code") val code:Int,
+    @SerializedName(value = "message") val message:String
+)
+
+

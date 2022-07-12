@@ -35,9 +35,11 @@ class MyPlantDiaryDetailActivity : AppCompatActivity(){
         binding.myPlantDiaryDetailHeartIv.setOnClickListener {
             if (!likes) {
                 binding.myPlantDiaryDetailHeartIv.setImageResource(R.drawable.heart)
+                getLike()
 
             } else {
                 binding.myPlantDiaryDetailHeartIv.setImageResource(R.drawable.empty_heart)
+                getUnlike()
             }
             likes = !likes
         }
@@ -129,5 +131,69 @@ class MyPlantDiaryDetailActivity : AppCompatActivity(){
         })
         //비동기작업이니까 함수가 잘 실행되었는지 확인차 찍어보기
         Log.d("DELETE", "HELLO")
+    }
+
+    fun getLike(){
+        val authService = getRetrofit().create(AuthRetrofitInterface::class.java)
+        authService.Like("Bearer "+token,diaryPK).enqueue(object :
+            Callback<LikeResponse> {
+
+            //응답이 왔을 때 처리하는 부분
+            override fun onResponse(call: Call<LikeResponse>, response: Response<LikeResponse>) {
+                //response의 body안에 서버 개발자가 만든게 들어있음
+                Log.d("Like/SUCCESS", response.toString())
+                val resp: LikeResponse = response.body()!!
+                Log.d("Like/SUCCESS", resp.toString())
+                when(resp.code){
+                    2000->{
+                        binding.myPlantDiaryDetailHeartCountTv.text = resp.result
+                    }
+
+
+                    else->{
+                        //Toast.makeText(this@MyPlantFragment,resp.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+
+            //네트워크 연결자체가 실패했을 때 실행하는 부분
+            override fun onFailure(call: Call<LikeResponse>, t: Throwable) {
+                Log.d("Like/FAILURE", t.message.toString())
+            }
+        })
+        //비동기작업이니까 함수가 잘 실행되었는지 확인차 찍어보기
+        Log.d("Like", "HELLO")
+    }
+
+    fun getUnlike(){
+        val authService = getRetrofit().create(AuthRetrofitInterface::class.java)
+        authService.Unlike("Bearer "+token,diaryPK).enqueue(object :
+            Callback<LikeResponse> {
+
+            //응답이 왔을 때 처리하는 부분
+            override fun onResponse(call: Call<LikeResponse>, response: Response<LikeResponse>) {
+                //response의 body안에 서버 개발자가 만든게 들어있음
+                Log.d("UNLike/SUCCESS", response.toString())
+                val resp: LikeResponse = response.body()!!
+                Log.d("UNLike/SUCCESS", resp.toString())
+                when(resp.code){
+                    2000->{
+                        binding.myPlantDiaryDetailHeartCountTv.text = resp.result
+                    }
+
+
+                    else->{
+                        //Toast.makeText(this@MyPlantFragment,resp.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+
+            //네트워크 연결자체가 실패했을 때 실행하는 부분
+            override fun onFailure(call: Call<LikeResponse>, t: Throwable) {
+                Log.d("UNLike/FAILURE", t.message.toString())
+            }
+        })
+        //비동기작업이니까 함수가 잘 실행되었는지 확인차 찍어보기
+        Log.d("UNLike", "HELLO")
     }
 }
