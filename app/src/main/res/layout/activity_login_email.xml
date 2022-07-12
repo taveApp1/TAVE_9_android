@@ -5,6 +5,17 @@
     android:layout_height="match_parent">
 
 
+    <TextView
+        android:id="@+id/pw_email_send_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:textColor="@color/darkgreen"
+        android:visibility="gone"
+        android:fontFamily="@font/font_regular"
+        app:layout_constraintStart_toStartOf="@id/email_enroll_tv"
+        app:layout_constraintTop_toBottomOf="@id/email_enroll_tv"/>
+
 
     <TextView
         android:id="@+id/textView"
