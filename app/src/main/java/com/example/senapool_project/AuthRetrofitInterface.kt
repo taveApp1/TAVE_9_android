@@ -71,4 +71,16 @@ interface AuthRetrofitInterface {
                       @Path("userPK") userPK: String,
                       @Path("diaryPK") plantPK: String): Call<MyPlantDeleteResponse>
 
+    @PUT("plant-diary/{diaryPK}/like")
+    fun Like(@Header("Authorization") token:String,
+                    @Path("diaryPK") plantPK: String): Call<LikeResponse>
+
+    @DELETE("plant-diary/{diaryPK}/unlike")
+    fun Unlike(@Header("Authorization") token:String,
+             @Path("diaryPK") plantPK: String): Call<LikeResponse>
+
+    @DELETE("/user/delete")
+    fun Quit(@Header("Authorization") token:String,
+             @Body password: Password): Call<QuitResponse>
+
 }
